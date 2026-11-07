@@ -3,5 +3,5 @@ keywords: loan, lendingclub, spark, tensorflow, keras, prediction, machine learn
 asks: What is the loan default project? | Tell me about the machine learning project.
 follow: What is ExpiryTracker? | What has he built in software? | Which tools and languages does he actually use?
 ---
-The loan default prediction project (CSCI316, Mar to Jun 2026, finished, team project) predicts loan defaults on the LendingClub dataset with Spark MLlib and TensorFlow with Keras.
-Hamim contributed to the model work and took the results through to a 19-slide presentation with real metrics.
+The loan default prediction project (CSCI316, Mar to Jun 2026, finished) is a team project that predicts defaults on the LendingClub dataset with Spark MLlib, TensorFlow and Keras.
+Hamim contributed to the model work and took the results through to a 19-slide presentation.

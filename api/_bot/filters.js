@@ -111,7 +111,7 @@ function checkInput(raw, max = 200) {
 // ---------- checking an AI answer ----------
 
 // words that can start a sentence or sit in the middle of one without being a name
-const commonWords = new Set(["I", "He", "His", "Hamim", "Hamim's", "The", "It", "This", "That", "There", "Yes", "No", "Please", "AI"]);
+const commonWords = new Set(["I", "He", "His", "Hamim", "Hamim's", "The", "It", "This", "That", "There", "Yes", "No", "Please", "AI", "LinkedIn"]);
 
 function checkOutput(answer, options) {
   const reject = (reason) => ({ ok: false, reason });
@@ -153,6 +153,8 @@ function checkOutput(answer, options) {
   for (const line of lines) {
     let sentenceStart = true;
     for (const token of line.split(/\s+/)) {
+      // a list marker such as "-" keeps the next word at the start of a sentence
+      if (/^[-\u2022\u2013]+$/.test(token)) continue;
       const word = token.replace(/^[("']+|[)"'.,;:!?]+$/g, "").replace(/'s$/, "");
       if (word && !sentenceStart && /^[A-Z]/.test(word) && !commonWords.has(word)) {
         if (!context.includes(word.toLowerCase())) return reject("name");

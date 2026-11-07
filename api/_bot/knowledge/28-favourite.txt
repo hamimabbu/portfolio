@@ -4,5 +4,5 @@ asks: Which project is he most proud of? | What is his proudest achievement?
 exact: what is his hardest project | which project was hardest | which project was the hardest | what was the hardest | what is the best thing he made | what is the best thing he built
 follow: What are Hamim's strongest security projects? | What did he build for the capstone? | How can I contact him?
 ---
-The site does not say which project Hamim is proudest of, which one was the hardest, or what he counts as his biggest achievement. LinkedIn is the best place to ask him.
-The site does lead with four security projects: the capstone upload scanner, the ARP poisoning detector, the Active Directory home lab and LayerLens. Each has its own case study page.
+The site does not say which project Hamim is proudest of, which was the hardest, or what he counts as his biggest achievement. LinkedIn is the best place to ask him.
+It leads with four security projects: the capstone upload scanner, the ARP poisoning detector, the Active Directory home lab and LayerLens.

@@ -4,9 +4,7 @@ asks: Why should we consider him? | What makes him stand out?
 exact: is he worth it | why should i care | why does he matter | why is he different
 follow: What are Hamim's strongest security projects? | What is he still learning? | How can I contact him?
 ---
-These are the points the site backs up with projects.
-He works on both sides of security. The upload scanner blocks risky files and the ARP detector raises alerts on forged network traffic. The Active Directory lab is built so he can practise the attacks that tools like these have to catch. Those attacks come next.
-He tests his work. LayerLens has 62 automated tests that run on Node.js 22 and 24 in GitHub Actions, the ARP detector has 14 passing unit tests, TalentMatch Pro has 86 end-to-end tests and 14 backend unit tests, and the capstone has backend integration tests and Cypress end-to-end tests.
-He says what is not finished. The Active Directory lab page says there are no attack results yet, and the upload scanner, ARP detector and LayerLens pages list what those tools cannot do.
-He covers more than one area. He has built Node.js and Spring Boot systems, and he has set up a Windows Server 2022 domain with Active Directory.
-He studies full time and works part-time at the same time.
+What the site backs up with projects:
+He works on both sides of security: the upload scanner and ARP detector deal with attacks, and the Active Directory lab is built to practise them.
+He tests his work: 62 automated tests in LayerLens, 14 in the ARP detector, 86 end-to-end tests in TalentMatch Pro.
+He says what is not finished, and lists what each tool cannot do.

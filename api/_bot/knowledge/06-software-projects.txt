@@ -3,10 +3,8 @@ keywords: software, developer, develop, development, backend, programming, codin
 asks: What has he built in software? | Which software projects has he built?
 follow: What is the online retail system? | What is TalentMatch Pro? | What is LayerLens?
 ---
-Hamim's software and data work is mostly team projects from his degree. They are the software side of what he is learning to secure. LayerLens is an independent project.
-AI-powered online retail system (CSCI318, Jul 2026 to present): Java 21, Spring Boot and Kafka microservices.
-TalentMatch Pro recruitment platform (CSIT314, Mar to Jun 2026): Node.js, Express, SQLite and JWT.
-Loan default prediction (CSCI316, Mar to Jun 2026): Apache Spark, TensorFlow and Keras.
-LayerLens (Nov 2026): a Node.js web app with no packages to install, 62 automated tests and a GitHub Actions workflow.
-The capstone upload scanner is also backend software (Node.js, Express and MongoDB).
-ExpiryTracker is his own mobile app idea, still at the Figma prototype stage. It is not built yet.
+Mostly team projects from his degree, plus LayerLens on his own:
+Online retail system (CSCI318, in progress): Java 21, Spring Boot, Kafka.
+TalentMatch Pro (CSIT314, finished): Node.js, Express, SQLite, JWT.
+Loan default prediction (CSCI316, finished): Spark, TensorFlow, Keras.
+Also LayerLens (Node.js, 62 automated tests) and the capstone backend. ExpiryTracker is an app idea that is not built yet.

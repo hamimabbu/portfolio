@@ -3,7 +3,5 @@ keywords: career goal, career goals, career plan, career plans, career path, lon
 asks: What are his career goals? | Why did he choose cyber security?
 follow: What roles is he looking for? | What is he still learning? | What are Hamim's strongest security projects?
 ---
-Hamim's first goal is a graduate role in security, such as SOC analyst, security analyst or junior penetration tester.
-The site does not say why he chose cyber security, which kind of security work he likes best, or what his longer-term plans are, so LinkedIn is the best place to ask him. It does show how he works: he builds a tool and then tests it until it breaks.
-His projects touch both sides. The upload scanner and the ARP detector look for attacks, and the Active Directory lab is built so he can practise the attacks. Those come next.
-He is studying for the PNPT, the practical penetration testing certification from TCM Security.
+His first goal is a graduate role in security, such as SOC analyst, security analyst or junior penetration tester. He is studying for the PNPT.
+The site does not say why he chose cyber security, which kind of security work he likes best, or what his longer-term plans are, so LinkedIn is the best place to ask him.

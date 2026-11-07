@@ -4,7 +4,6 @@ asks: Where has he worked? | Does he have work experience?
 exact: does he have experience | does he have any experience | has he got experience | is he experienced | what experience does he have | has he got any experience | is he working | is he working now | is he currently working
 follow: What roles is he looking for? | What is he studying? | How can I contact him?
 ---
-Coles Group: team member, part-time (Nov 2024 to present, Wollongong).
-United Petroleum: team member, part-time (Jun 2024 to Jun 2025, Windang).
-South Coast Harvest: part-time (Feb 2024 to May 2024).
-He has worked part-time alongside full-time study. His security experience comes from his projects and labs, not from these jobs.
+Coles Group, team member, part-time (Nov 2024 to present).
+United Petroleum, team member, part-time (Jun 2024 to Jun 2025). South Coast Harvest, part-time (Feb 2024 to May 2024).
+All alongside full-time study. His security experience comes from his projects and labs, not these jobs.

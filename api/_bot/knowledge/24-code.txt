@@ -5,10 +5,6 @@ exact: demo | is there a demo | can i see a demo | can i try it | is there a liv
 follow: What did he build for the capstone? | How does the ARP detector work? | What is LayerLens?
 links: GitHub profile | https://github.com/hamimabbu ; Active Directory lab repository | https://github.com/hamimabbu/active-directory-home-lab ; LayerLens repository | https://github.com/hamimabbu/layerlens ; ARP detector repository | https://github.com/hamimabbu/arp-poisoning-detector ; Capstone team repository | https://github.com/Shakif-a/buscal-app
 ---
-His GitHub profile is github.com/hamimabbu.
-The site does not link a live demo for any project. Publishing code does not run it anywhere.
-The Active Directory home lab is built and documented in a repository on GitHub.
-LayerLens is a public repository on GitHub under the MIT licence, with its tests and threat model. It is not deployed, so there is no live demo.
-The capstone code is in a team repository, which is a stripped-down extract, and his commits in it are linked on the capstone case study page.
-The ARP detector is a public repository on GitHub. It began as a group assignment, and the repository holds the cleaned-up copy, with its tests and a GitHub Actions workflow.
-TalentMatch Pro finished as a team project and its code is not public.
+His GitHub profile is github.com/hamimabbu. Public there: the Active Directory lab, LayerLens (MIT licence) and the ARP detector. The ARP detector is a public repository, but it began as a group assignment.
+TalentMatch Pro is not public. The capstone is a stripped-down team repository.
+The site does not link a live demo for any project. LayerLens is not deployed.

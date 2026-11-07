@@ -5,6 +5,5 @@ follow: Which tools and languages does he actually use? | What are Hamim's stron
 links: Verify the Google certificate | https://coursera.org/verify/IBY0ERDN2PDL
 ---
 University of Wollongong: Bachelor of Computer Science, cyber security major (Feb 2024 to Dec 2026).
-Google Technical Support Fundamentals: Coursera certificate, Oct 2026. It can be verified on Coursera.
-PNPT from TCM Security: studying.
-Relevant subjects: Ethical Hacking, Network Security, System Security, AI for Cybersecurity, Database Systems, Algorithms and Data Structures.
+Google Technical Support Fundamentals, Coursera certificate (Oct 2026), which can be verified on Coursera. Studying for the PNPT from TCM Security.
+Subjects: Ethical Hacking, Network Security, System Security, AI for Cybersecurity, Database Systems, Algorithms and Data Structures.

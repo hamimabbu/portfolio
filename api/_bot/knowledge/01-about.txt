@@ -5,5 +5,4 @@ exact: who is this | who is this guy | who is this person | whose portfolio is t
 follow: What are Hamim's strongest security projects? | What roles is he looking for? | What is he studying?
 ---
 Hasibur Rahaman Hamim (Hamim) is a final-year Bachelor of Computer Science student at the University of Wollongong, majoring in cyber security. He graduates in December 2026.
-He learns by building a tool and then testing it until it breaks. His security work covers a file upload scanner, an ARP poisoning detector, an Active Directory home lab and a small web app called LayerLens.
-He is based in Wollongong, NSW.
+He builds security tools and tests them until they break.

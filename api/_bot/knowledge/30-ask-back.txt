@@ -5,7 +5,5 @@ exact: show me something | show me anything | show me more | show me | tell me m
 follow: What are Hamim's strongest security projects? | Which tools and languages does he actually use? | What roles is he looking for?
 ---
 This is Hamim's portfolio, and I answer questions about him. What would you like to know?
-His work: the security projects, the team projects from his degree, or LayerLens.
-His skills: the tools and languages he has actually used.
-His background: his studies, his work history and when he is available.
-Pick one of the questions below, or type your own.
+His work (security projects, team projects, LayerLens), his skills, or his background (studies, work, availability).
+Tap a question below, or type your own.

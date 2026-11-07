@@ -3,9 +3,8 @@ keywords: his role, his part, his contribution, his contributions, what was his 
 asks: What was his part in the team projects? | What did he contribute to the team projects?
 follow: What did he build for the capstone? | What is the online retail system? | What is TalentMatch Pro?
 ---
-These are the parts of the team projects that the site says Hamim built himself.
-Capstone upload scanner: the backend and admin side. He built the file scanner, upload rate limiting, the audit page for blocked files, real-time alerts and role-based permissions.
-Online retail system (team of three, in progress): the Product and Inventory services, the stock change events and the low-stock alerts. He also shares the Postman, JUnit and integration testing.
-TalentMatch Pro: he worked across the full stack, connected the front end to the real API and built an 18-screen interactive prototype.
-Loan default prediction: he contributed to the model work and took the results through to a 19-slide presentation.
-ARP poisoning detector: a six-person group assignment. His copy adds a capture-file mode, a log option, a demo capture and unit tests.
+What the site says Hamim built in team projects:
+Capstone upload scanner: the file scanner, rate limiting, audit page, real-time alerts and role-based permissions.
+Online retail system (team of three): the Product and Inventory services, stock change events and low-stock alerts.
+TalentMatch Pro: full stack, and an 18-screen interactive prototype. Loan default prediction: model work and a 19-slide presentation.
+ARP detector: a six-person group assignment, and his copy adds a capture-file mode, a log option, a demo capture and unit tests.

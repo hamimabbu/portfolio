@@ -3,7 +3,6 @@ keywords: assistant, chatbot, chat, bot, ai, artificial intelligence, gpt, chatg
 asks: Is this assistant using AI? | How does this assistant work? | What can I ask you?
 follow: What does the assistant do with my questions? | What are Hamim's strongest security projects? | How can I contact him?
 ---
-This is a small assistant that answers questions about Hamim. It only knows the facts written on this site, and says so when something is not there.
-You can ask about his projects, tools and languages, studies, work history, availability and how to contact him.
-Some answers are written straight from those facts. When an AI model is switched on, it words the answer, and the answer is checked against the same facts before you see it. The line under each answer says which kind it was.
-Questions such as does he know Wireshark are answered from a written skills list, with no AI. The same list sits behind the fit command in the terminal, which checks a whole list of skills at once.
+This is a small assistant that answers from the facts on this site, and says so when something is not there.
+Ask about his projects, tools, studies, work history, availability or contact. The line under each answer says whether it was written straight from the facts or worded by an AI model and checked against them.
+Skill questions like does he know Wireshark are answered from a written skills list, with no AI.

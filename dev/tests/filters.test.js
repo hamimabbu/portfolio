@@ -106,3 +106,19 @@ test("output check strips markdown and tags", () => {
   assert.equal(r.ok, true);
   assert.equal(r.lines[0], "Hamim studies hard now.");
 });
+
+test("output check allows a pointer to LinkedIn and bullet lists, but still refuses invented names", () => {
+  const context = "Hamim built the ARP poisoning detector in Python and Scapy. It raises alerts.";
+  const ok = [
+    "That is not on the site, so LinkedIn is the best place to ask him.",
+    "- Built the ARP poisoning detector.\n- Raises alerts with Scapy.",
+    "\u2022 Detects forged traffic in Python.",
+  ];
+  ok.forEach((a) => assert.equal(checkOutput(a, { context }).ok, true, a));
+  const bad = [
+    "He built it in Python and also worked at Google.",
+    "- He built it in Python and worked at Google.",
+    "He built it with Python and Wireshark.",
+  ];
+  bad.forEach((a) => assert.equal(checkOutput(a, { context }).reason, "name", a));
+});

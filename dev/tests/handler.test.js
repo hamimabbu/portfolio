@@ -302,7 +302,7 @@ test("when the keywords find nothing, a model can pick the topic and the answer 
     assert.equal(service.seen.length, 2);
     // the second call gets the facts of the chosen topic only
     assert.match(service.seen[1].body.messages[0].content, /CONTEXT:/);
-    assert.match(service.seen[1].body.messages[0].content, /it lists eight projects/);
+    assert.match(service.seen[1].body.messages[0].content, /lists eight projects/);
     assert.ok(logs.some((l) => l.ev === "routed" && l.found === 1));
     assert.ok(!JSON.stringify(logs).includes("illustrate"), "the question is never logged");
   });

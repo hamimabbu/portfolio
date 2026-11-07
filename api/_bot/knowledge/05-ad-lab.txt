@@ -4,6 +4,6 @@ asks: What did he do in the Active Directory lab? | Tell me about the home lab.
 follow: What is he still learning? | What are Hamim's strongest security projects? | Which tools and languages does he actually use?
 links: Case study | ad-lab.html ; Repository | https://github.com/hamimabbu/active-directory-home-lab
 ---
-The Active Directory home lab (Jul 2026 to present) is a Windows domain called marvel.local in VirtualBox, built while following a guided course. It has a Windows Server 2022 domain controller and a Windows 11 client joined to it.
-Hamim set up Active Directory Domain Services, Certificate Services, static IPs, an SMB share, Group Policy and a service account with an SPN for Kerberoasting.
-Next he plans to connect Kali and run LLMNR poisoning, SMB relay and Kerberoasting, then write up what each one leaves in the logs. The domain is built and documented on GitHub, but there are no attack results yet.
+The Active Directory home lab (Jul 2026 to present) is a Windows domain, marvel.local, in VirtualBox, built while following a guided course.
+It has a Windows Server 2022 domain controller and a Windows 11 client, with Group Policy, Certificate Services and a service account for Kerberoasting.
+The attacks come next (LLMNR poisoning, SMB relay, Kerberoasting), so there are no attack results yet.

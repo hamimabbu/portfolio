@@ -4,7 +4,5 @@ asks: What is LayerLens? | Tell me about LayerLens.
 follow: What are Hamim's strongest security projects? | Where can I see his code? | Which tools and languages does he actually use?
 links: Case study | layerlens.html ; LayerLens repository | https://github.com/hamimabbu/layerlens
 ---
-LayerLens is a small web app that shows a visitor what their browser and network connection reveal, and says where each detail came from and how far to trust it. It is an independent project from Nov 2026, written in Node.js and plain JavaScript, HTML and CSS, with no packages to install.
-A public-record lookup (reverse DNS, registry or InternetDB) only runs after the operator switches a source on and the visitor approves it. The server works out the address itself, so a request cannot name a target, and local and reserved addresses never leave the server. It also limits request size, content type and calls per visitor, shows server text as plain text only, and keeps results in the tab with no database, cookies or analytics.
-62 automated tests pass on Node.js 22 and 24 in GitHub Actions, and a written threat model lists nine risks with the control for each. A Dockerfile and Compose file run it as a non-root user with a read-only filesystem, and it was built and run once on Linux.
+LayerLens is his own project (Nov 2026): a small Node.js web app that shows a visitor what their browser and connection reveal, and where each detail came from. It has a written threat model and 62 automated tests.
 It is not deployed. The optional TLS fingerprint diagnostic has not been run against real TLS traffic, reverse DNS has only run against a local test DNS server, and no independent security audit has been done.

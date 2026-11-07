@@ -1,0 +1,10 @@
+title: Capstone: secure evidence upload
+keywords: capstone, upload, uploads, scanner, evidence, okr, micromax, sponsor, antivirus, file upload, malicious file, socket io, rbac
+asks: What did he build for the capstone? | Tell me about the upload scanner.
+follow: How does the ARP detector work? | What has he built in software? | Which tools and languages does he actually use?
+links: Case study | upload-scanner.html ; Team repository | https://github.com/Shakif-a/buscal-app ; His commits | https://github.com/Shakif-a/buscal-app/commits?author=hamimabbu
+---
+Hamim built the part of a team capstone that checks every file a user uploads. The project is the OKR (objectives and key results) tracking module: secure evidence upload, for the sponsor Micromax Technology (Mar 2026 to present). People attach evidence to key results, so every uploaded file has to be checked.
+He worked on the backend and admin side. He built a scanner that checks file signatures and inspects PDFs, ZIP archives, images and documents for threats. He also added upload rate limiting, an audit page for blocked files, real-time alerts with Socket.IO and role-based permissions.
+Blocked files show up on the audit page. A manager can allow some blocked files once. Other blocks are final.
+It is covered by backend integration tests and Cypress end-to-end tests, with 30+ commits of his own in the team repository. The stack is Node.js, Express, MongoDB, React, Socket.IO and Cypress.

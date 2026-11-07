@@ -1,0 +1,8 @@
+title: What he is still learning
+keywords: learning, learn, next, plan, planning, planned, future, improve, growing, gaps, weakness, weaknesses, still, interested in learning, want to learn, wants to learn, plan to learn, plans to learn, going to learn, what is he learning, currently learning, learning now
+asks: What is he still learning? | What is next for him?
+follow: What did he do in the Active Directory lab? | What is he studying? | What are Hamim's strongest security projects?
+---
+Hamim is studying for the PNPT, the practical penetration testing certification from TCM Security.
+In his Active Directory lab the attacks are the next step: LLMNR poisoning, SMB relay and Kerberoasting, then a write-up of what each one leaves in the logs. After that: Responder, Impacket, Hashcat and Windows event logs.
+ExpiryTracker, his own mobile app idea, is still at the design stage.

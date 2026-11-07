@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OKR tracking module: secure evidence upload | Hamim</title>
+  <meta name="description" content="Case study: the upload scanner, review flow and audit trail I built for a team capstone. What it checks, what it blocks and where it falls short.">
+  <meta name="theme-color" content="#0e100f">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OKR tracking module: secure evidence upload | Hamim">
+  <meta property="og:description" content="Case study: the upload scanner, review flow and audit trail I built for a team capstone. What it checks, what it blocks and where it falls short.">
+  <meta property="og:url" content="https://hasibur-hamim.vercel.app/upload-scanner">
+  <meta property="og:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hasibur Rahaman Hamim, cyber security student at the University of Wollongong, graduating December 2026.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <link rel="canonical" href="https://hasibur-hamim.vercel.app/upload-scanner">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span>~/</span>hamim</a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html#cases">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-head">
+      <div class="wrap">
+        <p class="crumbs"><a href="index.html">Home</a> / <a href="index.html#cases">Security projects</a> / Case 01</p>
+        <h1>OKR tracking module: secure evidence upload</h1>
+        <p class="lead">A team capstone for the sponsor Micromax Technology. I built the part that checks every file a user attaches as evidence, and the review flow around it.</p>
+
+        <div class="sheet">
+          <dl class="rows">
+            <div>
+              <dt>Project</dt>
+              <dd>OKR tracking module added to a sponsor's dashboard. Final-year capstone (CSIT321), Mar 2026 to present.</dd>
+            </div>
+            <div>
+              <dt>My part</dt>
+              <dd>The backend and admin side: role-based permissions for groups and managers, and the evidence upload feature for key results, including the scanner.</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Node.js, Express, MongoDB, React, Socket.IO. Tested with Node's test runner and Cypress.</dd>
+            </div>
+            <div>
+              <dt>Code</dt>
+              <dd><a href="https://github.com/Shakif-a/buscal-app">Team repository</a> (a stripped-down extract) and <a href="https://github.com/Shakif-a/buscal-app/commits?author=hamimabbu">my commits</a></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="problem">
+      <div class="wrap">
+        <p class="kicker">01 / problem</p>
+        <h2>Why uploads need checking</h2>
+        <div class="prose">
+          <p>The OKR module lets people attach evidence, such as a PDF or a spreadsheet, to a key result. Accepting files from users is a classic way to bring a malicious file into a company. It has its own entry, <a href="https://cwe.mitre.org/data/definitions/434.html">CWE-434, unrestricted upload of file with dangerous type</a>, and the <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html">OWASP File Upload Cheat Sheet</a> gives the standard advice: check the content and not only the file name, and limit the file size.</p>
+          <p>The goal was a feature that blocks the common malicious uploads, tells a manager when something was blocked, and keeps a record, without making honest users fight the system.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="flow">
+      <div class="wrap">
+        <p class="kicker">02 / flow</p>
+        <h2>How an upload is handled</h2>
+        <p class="intro">Four steps, in this order. A threat that cannot be approved is blocked before the slower checks run.</p>
+        <ol class="flow">
+          <li>
+            <h3>Rate limit</h3>
+            <p>30 uploads per 5 minutes for each user, or for each IP address if there is no user. Past that, the server answers 429 with a Retry-After header.</p>
+          </li>
+          <li>
+            <h3>Built-in checks</h3>
+            <p>The real type of the file is sniffed from its bytes, then the checks for that type run. Some findings are final blocks straight away.</p>
+          </li>
+          <li>
+            <h3>Virus engine</h3>
+            <p>If a ClamAV server is configured, the file is streamed to it as well. In my setup it is optional.</p>
+          </li>
+          <li>
+            <h3>Decide and record</h3>
+            <p>Clean files are saved in a database transaction. A blocked file creates a report, alerts the managers and appears on the audit page.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block" id="checks">
+      <div class="wrap">
+        <p class="kicker">03 / checks</p>
+        <h2>What the scanner looks for</h2>
+        <p class="intro tight"><span class="pill final">final block</span> nobody can approve it. <span class="pill review">can be reviewed</span> a manager can allow that exact file once.</p>
+
+        <div class="checks">
+          <div class="check">
+            <h3>Test files and programs</h3>
+            <p>The EICAR test string is blocked on sight, and so is anything that starts like a Windows program (the DOS stub).</p>
+            <span class="pill final">final block</span>
+          </div>
+
+          <div class="check">
+            <h3>ZIP and Office files</h3>
+            <p>Covers .zip, .docx, .xlsx, .pptx and the Open Document formats. An archive is blocked for a declared unpacked size over 100 MB, a compression ratio over 500 on a large entry (a zip bomb), ZIP64 files, and unsafe paths such as absolute paths or "..". The start of each entry is checked for the EICAR string and for program headers (ELF, Mach-O, Java class, shebang, Windows PE).</p>
+            <span class="pill final">final block</span>
+          </div>
+
+          <div class="check">
+            <h3>Risky content inside archives</h3>
+            <p>Dangerous file extensions, Office and Open Document macros (vbaProject.bin, Scripts and Basic folders), nested archives and encrypted entries are flagged for a manager to look at.</p>
+            <span class="pill review">can be reviewed</span>
+          </div>
+
+          <div class="check">
+            <h3>PDF</h3>
+            <p>The file is searched for /JavaScript, /Launch, /EmbeddedFile and /RichMedia. Names hidden with #xx escapes are decoded, and compressed object streams are inflated first (4 MB per stream, 8 MB in total) so nothing hides inside them. Scripts, launch actions and embedded files can go to a manager. Other findings are final.</p>
+            <span class="pill review">can be reviewed</span>
+          </div>
+
+          <div class="check">
+            <h3>Images</h3>
+            <p>PNG, JPEG, GIF, WebP and HEIC files are checked for hidden script text (&lt;?php, &lt;script, &lt;%@ page), a ZIP hidden inside the image, and more than 16 trailing bytes after a PNG ends.</p>
+            <span class="pill final">final block</span>
+          </div>
+
+          <div class="check">
+            <h3>Other documents</h3>
+            <p>Old Office files (.doc, .xls, .ppt) are checked for a VBA macro marker, and RTF files for embedded objects. CSV files are checked for cells that start with = + - or @ and then call cmd, powershell, mshta, rundll32, regsvr32, wscript, cscript, msexcel or dde, the classic CSV formula trick.</p>
+            <span class="pill review">can be reviewed</span>
+          </div>
+        </div>
+
+        <div class="callout">
+          <h3>What gets recorded and shown</h3>
+          <p>Every upload gets a SHA-256 hash, a sniffed file type, the first bytes in hex and a text preview. The preview strips control and bidirectional characters so it cannot be used to disguise text. Virus signature names are cleaned to letters, numbers and a few symbols (80 characters at most) before they are shown.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="review">
+      <div class="wrap">
+        <p class="kicker">04 / review</p>
+        <h2>The review flow</h2>
+        <p class="intro">When a file is blocked, someone responsible can look at it, and the decision is recorded.</p>
+        <div class="prose">
+          <ul class="did">
+            <li>Managers are the objective owner, the sender's supervisor and the group manager, with admins as the fallback.</li>
+            <li>A blocked upload creates a report and sends a live alert. Viewing a report, deciding on it and opening the audit log each use their own signed token.</li>
+            <li>The sender cannot view or decide their own report.</li>
+            <li>Approving needs a typed confirmation. A final block returns 409 "This block is final", and a second decision returns 409 "Already decided". The first decision wins.</li>
+            <li>An approval lets that exact file through once: the same SHA-256 hash, the same key result and the same uploader, within 48 hours.</li>
+            <li>Blocked records are deleted after 14 days. Once a decision is made they are kept for 90 days for the audit page.</li>
+            <li>Repeated attempts escalate to admins: 5 tries with the same file, or 3 blocked files within 24 hours.</li>
+          </ul>
+        </div>
+
+        <h3 class="more-title">Small details that matter</h3>
+        <div class="prose">
+          <ul class="did">
+            <li>Alert text is escaped before it goes into a message, and ids are checked with <code>mongoose.isObjectIdOrHexString</code> before any lookup.</li>
+            <li>An approval is claimed with one atomic update (<code>findOneAndUpdate</code> to "used"), so two requests cannot spend the same approval.</li>
+            <li>If the database save fails after an approval was used, the approval is released again.</li>
+            <li>With <code>CLAMAV_REQUIRED=true</code> the upload fails closed with a 503 when the engine cannot be reached.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="growth">
+      <div class="wrap">
+        <p class="kicker">05 / history</p>
+        <h2>How it grew, from my commits</h2>
+        <p class="intro">Dates come from the commit history of the team repository, all in 2026.</p>
+        <ul class="timeline">
+          <li>OKR backend: objective and key result endpoints, and OKR permissions<small>Aug</small></li>
+          <li>Admin permissions, group management, group-scoped manager permissions and backend regression tests<small>Late Aug to Sep</small></li>
+          <li>Key result evidence workflow<small>Sep 21</small></li>
+          <li>Upload safeguards (the rate limiter), real-time evidence notifications and a better upload interface<small>Sep 24</small></li>
+          <li>Multi-file evidence queue<small>Sep 26</small></li>
+          <li>Antivirus engine, repeat handling, audit page, richer reports and live notifications for blocked uploads, in one commit that touched 44 files<small>Oct 4</small></li>
+          <li>Keyboard focus kept inside the evidence dialog so Escape still closes it<small>Oct 7</small></li>
+          <li>A message that explains why evidence upload is not available on a key result<small>Oct 8</small></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="tests">
+      <div class="wrap">
+        <p class="kicker">06 / tests</p>
+        <h2>How it is tested</h2>
+        <div class="prose">
+          <p>The backend tests use Node's built-in runner (<code>node --test</code>). They cover the scanner checks (<code>evidenceScanner.test.js</code>), the virus engine client (<code>virusEngine.test.js</code>), the blocked-upload report flow (<code>blockedUploadReport.test.js</code>) and an integration test of the backend (<code>integration/backend.test.js</code>). The frontend has Cypress end-to-end tests.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="limits">
+      <div class="wrap">
+        <p class="kicker">07 / limits</p>
+        <h2>What it does not do</h2>
+        <div class="callout">
+          <h3>Honest limits</h3>
+          <ul class="did">
+            <li>The checks are patterns and heuristics. A clean result means nothing known was found, not that the file is safe.</li>
+            <li>ClamAV is optional. By default, if the engine errors, the upload carries on with the built-in checks only (fail open). Setting <code>CLAMAV_REQUIRED=true</code> makes it fail closed.</li>
+            <li>The rate limiter keeps its counts in memory. They reset when the server restarts and are not shared between processes.</li>
+            <li>An approval depends on a manager's judgment.</li>
+            <li>The public repository is a stripped-down extract with the Business Calendar module and the OKR module. The sponsor's own dashboard is not public, so I cannot show it.</li>
+          </ul>
+        </div>
+
+        <h3 class="more-title">Credit</h3>
+        <div class="prose">
+          <p>This was built with my teammates as the final-year capstone for the sponsor Micromax Technology. I worked on the backend and admin side, including the scanner and the review flow. My teammates built the rest of the module.</p>
+        </div>
+        <p class="case-links">
+          <a class="btn small primary" href="https://github.com/Shakif-a/buscal-app/commits?author=hamimabbu">My commits</a>
+          <a class="btn small" href="https://github.com/Shakif-a/buscal-app/commit/7377d29">The scanner commit</a>
+          <a class="btn small" href="https://github.com/Shakif-a/buscal-app">Team repository</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <p class="nextcase">
+          <a href="index.html#cases">Back to all projects</a>
+          <a href="arp-detector.html">Next: ARP poisoning detector</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Hasibur Rahaman Hamim, Wollongong NSW. Last updated November 2026.</p>
+      <p>Plain HTML and CSS, with no scripts on this page. No cookies, no trackers, no third-party code.</p>
+    </div>
+  </footer>
+</body>
+</html>

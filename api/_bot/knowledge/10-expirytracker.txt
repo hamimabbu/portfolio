@@ -1,0 +1,6 @@
+title: ExpiryTracker
+keywords: expirytracker, expiry, grocery, groceries, mobile, app idea, figma, react native, expo, firebase
+asks: What is ExpiryTracker? | Tell me about his own app idea.
+follow: What has he built in software? | What is he still learning? | How can I contact him?
+---
+ExpiryTracker is Hamim's own idea for a mobile app that sorts grocery products into Safe, Discount Zone, Danger Zone and Expired. It is at the Figma prototype stage and is not built yet. The planned stack is React Native with Expo, Firebase and MongoDB.

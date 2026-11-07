@@ -1,0 +1,8 @@
+title: Privacy
+keywords: privacy, track, tracking, tracker, trackers, cookie, cookies, analytics, store, stored, log, logs, logging, spy, gdpr, personal data
+asks: Does this site track me? | What does the assistant do with my questions?
+follow: Is this assistant using AI? | What are Hamim's strongest security projects? | How can I contact him?
+---
+The page sets no cookies and loads no analytics or third-party code. The terminal commands run in your browser and send nothing.
+Longer questions go to a small assistant that runs on the same host as this site. It answers from the facts on this site. If an AI model is switched on, the question text is sent to its provider to word the answer. Questions are not stored, and the code does not log who asked.
+Like any website, the host may keep ordinary server logs.

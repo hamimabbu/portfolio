@@ -1,0 +1,7 @@
+title: AI-powered online retail system
+keywords: retail, kafka, spring, spring boot, microservice, microservices, inventory, java, csci318, shopping, shopping assistant
+asks: What is the online retail system? | Tell me about the retail project.
+follow: What is TalentMatch Pro? | What has he built in software? | Which tools and languages does he actually use?
+---
+The AI-powered online retail system is a CSCI318 team project (team of three, Jul 2026 to present, still in progress). It has four Spring Boot microservices connected through Kafka events, plus an AI shopping assistant his teammates built.
+Hamim owns the Product and Inventory services, the stock change events and the low-stock alerts. He also shares the Postman, JUnit and integration testing. The stack is Java 21, Spring Boot, Apache Kafka and JUnit.

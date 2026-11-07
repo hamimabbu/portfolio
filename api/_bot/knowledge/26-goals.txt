@@ -1,0 +1,9 @@
+title: Goals and interests
+keywords: career goal, career goals, career plan, career plans, career path, long term, longer term, five years, 5 years, ten years, where does he see himself, ambition, ambitions, aspiration, aspirations, goals, goal, interested in, interests, passion, passionate, motivation, motivated, motivates, why cyber security, why security, why does he want, why did he choose, why did he pick, why is he interested, chose cyber security, choose cyber security, why did he go into cyber security, why did he go into security, why did he get into cyber security, why did he get into security, why did he study cyber security, why study cyber security, what got him into cyber security, what got him into security, what drew him to cyber security, what drew him to security, what attracted him to cyber security, what attracted him to security, what made him choose security, what made him pick cyber security, what made him pick security, what inspired him, what inspires him, what interests him, want to work in, offensive or defensive, red team, red teaming, blue team, blue teaming, prefer, prefers
+asks: What are his career goals? | Why did he choose cyber security?
+follow: What roles is he looking for? | What is he still learning? | What are Hamim's strongest security projects?
+---
+Hamim's first goal is a graduate role in security, such as SOC analyst, security analyst or junior penetration tester.
+The site does not say why he chose cyber security, which kind of security work he likes best, or what his longer-term plans are, so LinkedIn is the best place to ask him. It does show how he works: he builds a tool and then tests it until it breaks.
+His projects touch both sides. The upload scanner and the ARP detector look for attacks, and the Active Directory lab is built so he can practise the attacks. Those come next.
+He is studying for the PNPT, the practical penetration testing certification from TCM Security.

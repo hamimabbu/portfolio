@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARP poisoning detector | Hamim</title>
+  <meta name="description" content="Case study: a Python and Scapy tool that watches ARP traffic and alerts on poisoning. How it works, real output, tests, and what it cannot detect.">
+  <meta name="theme-color" content="#0e100f">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ARP poisoning detector | Hamim">
+  <meta property="og:description" content="Case study: a Python and Scapy tool that watches ARP traffic and alerts on poisoning. How it works, real output, tests, and what it cannot detect.">
+  <meta property="og:url" content="https://hasibur-hamim.vercel.app/arp-detector">
+  <meta property="og:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hasibur Rahaman Hamim, cyber security student at the University of Wollongong, graduating December 2026.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <link rel="canonical" href="https://hasibur-hamim.vercel.app/arp-detector">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span>~/</span>hamim</a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html#cases">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-head">
+      <div class="wrap">
+        <p class="crumbs"><a href="index.html">Home</a> / <a href="index.html#cases">Security projects</a> / Case 02</p>
+        <h1>ARP poisoning detector</h1>
+        <p class="lead">A small Python tool that watches ARP traffic and raises an alert when one MAC address claims several IPs, or one IP is claimed by several MACs.</p>
+
+        <div class="sheet">
+          <dl class="rows">
+            <div>
+              <dt>Project</dt>
+              <dd>Group assignment for System Security (CSCI262), six members, Oct 2025. My copy has been tidied and extended since.</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Python, Scapy. Lab work with Kali Linux, Metasploitable and Wireshark.</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Tested. 14 unit tests pass on Windows and Linux with Python 3.11, 3.12 and 3.13 in GitHub Actions. The demo capture raises 3 alerts.</dd>
+            </div>
+            <div>
+              <dt>Code</dt>
+              <dd><a href="https://github.com/hamimabbu/arp-poisoning-detector">github.com/hamimabbu/arp-poisoning-detector</a>. Public.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="problem">
+      <div class="wrap">
+        <p class="kicker">01 / problem</p>
+        <h2>Why ARP can be lied to</h2>
+        <div class="prose">
+          <p>ARP is how a machine on a local network finds the MAC address that belongs to an IP address. Replies are not authenticated, so any machine on the network can send a forged reply and claim to be someone else. With the right forged replies, an attacker can sit between a victim and the router and read or change their traffic. This is a man-in-the-middle attack, listed in MITRE ATT&amp;CK as <a href="https://attack.mitre.org/techniques/T1557/002/">T1557.002, ARP cache poisoning</a>.</p>
+          <p>The victim has no built-in way to notice. In the group lab we ran ARP spoofing from Kali Linux against a Metasploitable machine and used Wireshark to look at the forged packets. Then we wrote a tool that spots them.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="how">
+      <div class="wrap">
+        <p class="kicker">02 / how it works</p>
+        <h2>Four steps</h2>
+        <ol class="flow">
+          <li>
+            <h3>Sniff</h3>
+            <p>Scapy captures packets from a live interface, or reads them from a saved pcap file.</p>
+          </li>
+          <li>
+            <h3>Filter</h3>
+            <p>Only ARP requests and replies are kept. Everything else is ignored, and so are probes with the source address 0.0.0.0.</p>
+          </li>
+          <li>
+            <h3>Remember</h3>
+            <p>Two tables in memory: which MACs have claimed each IP, and which IPs each MAC has claimed.</p>
+          </li>
+          <li>
+            <h3>Compare</h3>
+            <p>An IP with more than one MAC, or a MAC with more than one IP, raises an alert. Each alert is logged once.</p>
+          </li>
+        </ol>
+
+        <div class="checks">
+          <div class="check">
+            <h3>Rule 1: one IP, two MACs</h3>
+            <p>Two different machines say they own the same address. In an attack this happens when the attacker answers for the router or for the victim.</p>
+          </div>
+          <div class="check">
+            <h3>Rule 2: one MAC, two IPs</h3>
+            <p>One machine says it owns several addresses. In a classic man-in-the-middle attack the attacker's MAC shows up for both the victim and the router.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="output">
+      <div class="wrap">
+        <p class="kicker">03 / output</p>
+        <h2>Real output</h2>
+        <p class="intro">This is the detector reading the demo capture that comes with the project. One MAC (08:00:27:cc:cc:03) claims both 192.168.56.1 and 192.168.56.20, and each of those addresses already belongs to another MAC, so one attack raises three alerts.</p>
+        <figure class="output">
+          <pre>$ python arp_detector.py -r samples/demo_attack.pcap
+23:43:38 [INFO] ARP cache poisoning detection started
+<span class="warn">23:43:38 [WARNING] Poisoning detected: IP 192.168.56.1 is claimed by 2 MACs: ['08:00:27:aa:aa:01', '08:00:27:cc:cc:03']</span>
+<span class="warn">23:43:38 [WARNING] Poisoning detected: MAC 08:00:27:cc:cc:03 is claiming 2 IPs: ['192.168.56.1', '192.168.56.20']</span>
+<span class="warn">23:43:38 [WARNING] Poisoning detected: IP 192.168.56.20 is claimed by 2 MACs: ['08:00:27:bb:bb:02', '08:00:27:cc:cc:03']</span>
+23:43:38 [INFO] Stopped. Alerts raised: 3</pre>
+          <figcaption>Real output from the detector, run on the demo capture that ships with the project.</figcaption>
+        </figure>
+        <div class="prose">
+          <p>The 14 unit tests cover normal traffic, both kinds of alert, repeated alerts, forged requests, ignored packets, the demo capture, log output and error handling.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="defences">
+      <div class="wrap">
+        <p class="kicker">04 / defences</p>
+        <h2>Defences we compared</h2>
+        <p class="intro">Detecting an attack is not the same as stopping it. For the assignment we wrote up the trade-offs of three ways to defend against ARP poisoning.</p>
+        <div class="sheet">
+          <dl class="rows">
+            <div>
+              <dt>Static ARP</dt>
+              <dd>Fixed IP-to-MAC entries that forged replies cannot overwrite. Simple and effective on a few machines, but kept up by hand, so it does not scale.</dd>
+            </div>
+            <div>
+              <dt>Dynamic ARP Inspection</dt>
+              <dd>A managed switch checks every ARP packet against a trusted table built by DHCP snooping, and drops the ones that do not match. Works well at scale, but needs switches that support it.</dd>
+            </div>
+            <div>
+              <dt>Secure ARP</dt>
+              <dd>A proposed replacement that signs ARP messages. It closes the hole in the protocol itself, but needs keys and changes on every host, which is why it is rarely used.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="limits">
+      <div class="wrap">
+        <p class="kicker">05 / limits</p>
+        <h2>What it does not do</h2>
+        <div class="callout">
+          <h3>Honest limits</h3>
+          <ul class="did">
+            <li>It only detects. It does not block or repair anything.</li>
+            <li>It only sees the ARP traffic that reaches the machine it runs on.</li>
+            <li>Devices with several IP addresses, and failover setups, can cause false alarms.</li>
+            <li>If it starts after an attack has begun, it may learn the attacker's MAC as the real one.</li>
+            <li>It handles IPv4 ARP only. Its tables live in memory and reset when it restarts.</li>
+            <li>MITRE ATT&amp;CK suggests watching for several IPs resolving to one MAC, and for unsolicited or repeated gratuitous ARP. This tool covers the first idea. It does not look for repeated gratuitous ARP.</li>
+          </ul>
+        </div>
+
+        <h3 class="more-title">Where it came from</h3>
+        <div class="prose">
+          <p>This began as a six-member group assignment for System Security (CSCI262) in October 2025. The version in my repository is a cleaned-up copy with a capture-file mode, a log option, a demo capture and unit tests. The repository is public.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <p class="nextcase">
+          <a href="upload-scanner.html">Previous: secure evidence upload</a>
+          <a href="ad-lab.html">Next: Active Directory home lab</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Hasibur Rahaman Hamim, Wollongong NSW. Last updated November 2026.</p>
+      <p>Plain HTML and CSS, with no scripts on this page. No cookies, no trackers, no third-party code.</p>
+    </div>
+  </footer>
+</body>
+</html>

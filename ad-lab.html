@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Active Directory home lab | Hamim</title>
+  <meta name="description" content="Case study: a VirtualBox Active Directory lab. What is built, which attacks come next, and what each one should look like to a defender.">
+  <meta name="theme-color" content="#0e100f">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Active Directory home lab | Hamim">
+  <meta property="og:description" content="Case study: a VirtualBox Active Directory lab. What is built, which attacks come next, and what each one should look like to a defender.">
+  <meta property="og:url" content="https://hasibur-hamim.vercel.app/ad-lab">
+  <meta property="og:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hasibur Rahaman Hamim, cyber security student at the University of Wollongong, graduating December 2026.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <link rel="canonical" href="https://hasibur-hamim.vercel.app/ad-lab">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span>~/</span>hamim</a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html#cases">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-head">
+      <div class="wrap">
+        <p class="crumbs"><a href="index.html">Home</a> / <a href="index.html#cases">Security projects</a> / Case 03</p>
+        <h1>Active Directory home lab</h1>
+        <p class="lead">A Windows domain I built in VirtualBox so I can practise the attacks I read about and learn what they look like from the defender's side. The domain is built. The attacks come next.</p>
+
+        <div class="sheet">
+          <dl class="rows">
+            <div>
+              <dt>Period</dt>
+              <dd>Jul 2026 to present</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>In progress. The domain is built and documented. The attacks are planned, so there are no attack results yet.</dd>
+            </div>
+            <div>
+              <dt>Built from</dt>
+              <dd>A guided security course. I use the lab alongside my PNPT study.</dd>
+            </div>
+            <div>
+              <dt>Machines</dt>
+              <dd>HYDRA-DC (Windows Server 2022), THEPUNISHER (Windows 11) and a Kali Linux VM. Domain: marvel.local</dd>
+            </div>
+            <div>
+              <dt>Code</dt>
+              <dd><a href="https://github.com/hamimabbu/active-directory-home-lab">github.com/hamimabbu/active-directory-home-lab</a></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="network">
+      <div class="wrap">
+        <p class="kicker">01 / network</p>
+        <h2>What is in the lab</h2>
+        <p class="intro">Everything runs in VirtualBox on its own internal network, separate from my everyday computers.</p>
+
+        <figure class="net">
+          <p class="net-label">marvel.local, VirtualBox internal network</p>
+          <div class="net-row">
+            <div class="node">
+              <b>HYDRA-DC</b>
+              <span>Windows Server 2022</span>
+              <span>Domain controller: AD DS, DNS, AD CS</span>
+            </div>
+            <div class="node">
+              <b>THEPUNISHER</b>
+              <span>Windows 11</span>
+              <span>Client joined to the domain</span>
+            </div>
+            <div class="node pending">
+              <b>Kali Linux</b>
+              <span>Attacker machine</span>
+              <span class="wip-note">Not connected yet</span>
+            </div>
+          </div>
+          <figcaption class="sr-only">Diagram of the lab: a domain controller and a Windows 11 client on one internal network, and a Kali Linux machine that is not connected yet.</figcaption>
+        </figure>
+
+        <div class="prose">
+          <ul class="did">
+            <li>Domain controller with Active Directory Domain Services, DNS and Certificate Services (AD CS).</li>
+            <li>A Windows 11 client joined to the domain, with static IP addresses on both machines.</li>
+            <li>Users, an SMB file share, Group Policy and a service account with an SPN, which is what Kerberoasting needs.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="attacks">
+      <div class="wrap">
+        <p class="kicker">02 / attacks</p>
+        <h2>The three attacks I will run first</h2>
+        <p class="intro">They are the usual first steps against a Windows domain, and each one leaves something a defender can look for. The "look for" lines are what I expect to find. I will confirm them in the lab before I treat them as results.</p>
+
+        <div class="checks three">
+          <div class="check">
+            <h3>LLMNR and NBT-NS poisoning</h3>
+            <p><span class="pill review">planned</span> <a href="https://attack.mitre.org/techniques/T1557/001/">ATT&amp;CK T1557.001</a></p>
+            <p>If a Windows machine cannot find a name through DNS, it may ask the whole local network instead (LLMNR on UDP 5355, NBT-NS on UDP 137, mDNS on UDP 5353). An attacker can answer first and collect the authentication that follows.</p>
+            <p>Look for: name queries that DNS did not answer, followed by a reply from a machine that is not a DNS server. Unusual traffic on those three ports.</p>
+            <p>Defence: turn off LLMNR, mDNS and NetBIOS name resolution where they are not needed.</p>
+          </div>
+
+          <div class="check">
+            <h3>SMB relay</h3>
+            <p><span class="pill review">planned</span> <a href="https://attack.mitre.org/techniques/T1557/001/">ATT&amp;CK T1557.001</a></p>
+            <p>Instead of cracking the captured authentication, the attacker relays it to another machine and acts as the user there. It only works against machines that do not require SMB signing. The lab needs a second client for this, which is on my list.</p>
+            <p>Look for: the same account logging on from an address that does not belong to that user, right after a poisoning event.</p>
+            <p>Defence: require SMB signing, and segment the network.</p>
+          </div>
+
+          <div class="check">
+            <h3>Kerberoasting</h3>
+            <p><span class="pill review">planned</span> <a href="https://attack.mitre.org/techniques/T1558/003/">ATT&amp;CK T1558.003</a></p>
+            <p>Any domain user can ask for a Kerberos service ticket for an account that has an SPN. Part of that ticket is encrypted with the account's password, so it can be cracked offline. The lab already has a service account with an SPN for this.</p>
+            <p>Look for: Windows Event ID 4769 (a service ticket was requested) with RC4 encryption (type 0x17), and one account asking for many service tickets in a short time.</p>
+            <p>Defence: long random passwords on service accounts, and no RC4 where it is not needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="status">
+      <div class="wrap">
+        <p class="kicker">03 / status</p>
+        <h2>Where it stands</h2>
+        <div class="sheet">
+          <ul class="todo">
+            <li><span class="status done">done</span> Domain controller built with DNS and Certificate Services</li>
+            <li><span class="status done">done</span> Windows 11 client joined to the domain</li>
+            <li><span class="status done">done</span> Users, a service account, a file share and Group Policy</li>
+            <li><span class="status wip">next</span> Connect Kali and work through each attack</li>
+            <li><span class="status wip">next</span> Write up each attack and how to detect it</li>
+            <li><span class="status wip">next</span> Add a second client for lateral movement</li>
+            <li><span class="status wip">next</span> Add screenshots and a cleaner network diagram</li>
+          </ul>
+        </div>
+        <div class="prose">
+          <p class="field">Tools in use now: VirtualBox, Windows Server 2022, Windows 11 and Kali Linux. Planned: Responder, Impacket, Hashcat and the Windows event logs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <p class="nextcase">
+          <a href="arp-detector.html">Previous: ARP poisoning detector</a>
+          <a href="layerlens.html">Next: LayerLens</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Hasibur Rahaman Hamim, Wollongong NSW. Last updated November 2026.</p>
+      <p>Plain HTML and CSS, with no scripts on this page. No cookies, no trackers, no third-party code.</p>
+    </div>
+  </footer>
+</body>
+</html>

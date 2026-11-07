@@ -1,0 +1,7 @@
+title: TalentMatch Pro
+keywords: talentmatch, recruitment, recruiting, csit314, levenshtein, jwt, sqlite, express
+asks: What is TalentMatch Pro? | Tell me about the recruitment platform.
+follow: What is the loan default project? | What has he built in software? | Which tools and languages does he actually use?
+---
+TalentMatch Pro is a recruitment platform built as a CSIT314 team project (Mar to Jun 2026, finished, code not public). It uses Node.js, Express and SQLite with JWT login, role-based access, typo-tolerant search using Levenshtein distance, recommendation scoring and membership tiers.
+Hamim worked across the full stack, connected the front end to the real API and built an 18-screen interactive prototype. All 86 end-to-end tests and 14 backend unit tests pass.

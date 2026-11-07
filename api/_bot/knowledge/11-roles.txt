@@ -1,0 +1,9 @@
+title: Roles he is looking for
+keywords: role, roles, job, jobs, looking, seeking, position, positions, graduate role, soc, analyst, pentest, penetration tester, junior, it support, target, interested, good fit, suit, suits, suitable, right for, match for
+asks: What roles is he looking for? | What kind of job is he after?
+follow: Is he available to start after graduating in December 2026? | What are Hamim's strongest security projects? | How can I contact him?
+---
+Hamim's first goal is a graduate role in security, such as SOC analyst, security analyst or junior penetration tester.
+He also knows his way around Windows, Active Directory and backend code, so IT support and software roles suit him too.
+He is based in Wollongong, NSW and is open to roles in Wollongong and Sydney.
+To compare a job ad with what this site shows, use the fit command in the terminal.

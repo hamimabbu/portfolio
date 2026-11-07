@@ -1,0 +1,13 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  },
+  "description": "Portfolio site with a small question-answering assistant. No dependencies.",
+  "scripts": {
+    "dev": "node dev/server.js",
+    "test": "node --test \"dev/tests/*.test.js\"",
+    "redteam": "node dev/redteam.js"
+  }
+}

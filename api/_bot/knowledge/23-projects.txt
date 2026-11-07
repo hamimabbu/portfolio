@@ -1,0 +1,11 @@
+title: All his projects
+keywords: all projects, all his projects, all of his projects, list of projects, list of his projects, list his projects, list projects, show projects, show me his projects, show me the projects, show his projects, what are his projects, about his projects, how many projects, number of projects, previous projects, past projects, other projects, portfolio, his portfolio, examples of his work, samples of his work, work samples, independent project, independent projects, own project, own projects, personal project, personal projects, solo project, solo projects, side project, side projects, not a team project, non team project
+asks: What projects has he worked on? | How many projects has he done? | What has he built?
+follow: What are Hamim's strongest security projects? | What has he built in software? | Where can I see his code?
+---
+This site is Hamim's portfolio, and it lists eight projects.
+Four are security projects, and each has its own case study page: the capstone upload scanner, the ARP poisoning detector, the Active Directory home lab and LayerLens, a small web app built around a threat model.
+Three are team projects from his degree: the AI-powered online retail system, TalentMatch Pro and the loan default prediction.
+The eighth, ExpiryTracker, is his own mobile app idea. It is still a design and is not built yet.
+LayerLens and the Active Directory home lab are his own projects outside a team. The capstone and the degree projects are team work, and the ARP detector began as a group assignment.
+To find out which project used a tool, ask about the tool, for example: does he know Python?

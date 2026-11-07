@@ -1,0 +1,10 @@
+title: ARP poisoning detector
+keywords: arp, poisoning, spoofing, spoof, detector, scapy, wireshark, mitm, man in the middle, csci262, network, networking
+asks: How does the ARP detector work? | Tell me about the ARP poisoning detector.
+follow: What did he do in the Active Directory lab? | Which tools and languages does he actually use? | What are Hamim's strongest security projects?
+links: Case study | arp-detector.html ; Repository | https://github.com/hamimabbu/arp-poisoning-detector
+---
+The ARP poisoning detector is a Python tool that uses Scapy to watch ARP traffic. ARP has no authentication, so any machine on a network can claim to be any other.
+It raises an alert when one MAC address claims several IPs, or when one IP is claimed by several MACs. Hamim's copy reads live traffic or a saved capture file, can write a log and comes with a demo capture and unit tests.
+14 unit tests pass on Windows and Linux with Python 3.11, 3.12 and 3.13 in GitHub Actions, and the demo capture raises 3 alerts.
+It began in Oct 2025 as a six-person System Security (CSCI262) assignment. The team ran ARP spoofing from Kali against Metasploitable and inspected the forged packets in Wireshark. The repository is public on GitHub and holds the cleaned-up copy.

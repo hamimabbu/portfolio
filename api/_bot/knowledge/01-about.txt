@@ -1,0 +1,8 @@
+title: About Hamim
+keywords: who is he, who is hamim, about him, about hamim, introduce, introduction, background, summary, bio, student, his name, full name, summarise him, summarise hamim, summarize him, summarize hamim, summarise his profile, summarize his profile, his profile, profile summary, describe him, describe hamim, sum up
+asks: Who is Hamim? | Who is he? | Tell me about Hamim. | Tell me about him. | What does he do? | What does Hamim do? | What is his name? | What is his full name? | Summarise his profile.
+follow: What are Hamim's strongest security projects? | What roles is he looking for? | What is he studying?
+---
+Hasibur Rahaman Hamim (Hamim) is a final-year Bachelor of Computer Science student at the University of Wollongong, majoring in cyber security. He graduates in December 2026.
+He learns by building a tool and then testing it until it breaks. His security work covers a file upload scanner, an ARP poisoning detector, an Active Directory home lab and a small web app called LayerLens.
+He is based in Wollongong, NSW.

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LayerLens: what a browser and connection reveal | Hamim</title>
+  <meta name="description" content="Case study: a Node.js app that shows visitors what their browser and connection reveal, with consent checks, a threat model, 62 tests and its limits.">
+  <meta name="theme-color" content="#0e100f">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="LayerLens: what a browser and connection reveal | Hamim">
+  <meta property="og:description" content="Case study: a Node.js app that shows visitors what their browser and connection reveal, with consent checks, a threat model, 62 tests and its limits.">
+  <meta property="og:url" content="https://hasibur-hamim.vercel.app/layerlens">
+  <meta property="og:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hasibur Rahaman Hamim, cyber security student at the University of Wollongong, graduating December 2026.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hasibur-hamim.vercel.app/og-image.png">
+  <link rel="canonical" href="https://hasibur-hamim.vercel.app/layerlens">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span>~/</span>hamim</a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html#cases">Projects</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-head">
+      <div class="wrap">
+        <p class="crumbs"><a href="index.html">Home</a> / <a href="index.html#cases">Security projects</a> / Case 04</p>
+        <h1>LayerLens</h1>
+        <p class="lead">A small web app that shows a visitor what their browser and network connection reveal, and says where each detail came from and how far to trust it. A tool that looks things up about visitors is easy to misuse, so the design starts with its limits.</p>
+
+        <div class="sheet">
+          <dl class="rows">
+            <div>
+              <dt>Project</dt>
+              <dd>Independent project, Nov 2026.</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Node.js 22 or newer with no packages to install. Plain JavaScript, HTML and CSS in the browser. Docker for packaging and GitHub Actions for the tests.</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Tested, not deployed. 62 automated tests pass on Node.js 22 and 24.</dd>
+            </div>
+            <div>
+              <dt>Code</dt>
+              <dd><a href="https://github.com/hamimabbu/layerlens">github.com/hamimabbu/layerlens</a>. Public, MIT licence.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="problem">
+      <div class="wrap">
+        <p class="kicker">01 / problem</p>
+        <h2>Why a lookup tool needs care</h2>
+        <div class="prose">
+          <p>A website can read many details about a visitor's browser and connection. Most visitors never see them, and they are easy to over-read. A shared IP address or a network registration record describes a connection, not the person using it. LayerLens shows the details back to the visitor: a browser check in the tab, a connection check on the server and optional public-record lookups. Each result lists its source, the time and what it cannot prove.</p>
+          <p>A tool like this has risks of its own. If it can be told which address to look up, it becomes a way to probe other networks. If it trusts forwarding headers, a visitor can pretend to be somebody else. If it shows text from outside sources as HTML, a hostile record can run a script in the page. The threat model in the repository lists nine risks, each with the control that answers it and what is still untested.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="flow">
+      <div class="wrap">
+        <p class="kicker">02 / flow</p>
+        <h2>How a public-record lookup is handled</h2>
+        <ol class="flow">
+          <li>
+            <h3>Consent</h3>
+            <p>The operator has to switch a source on, and it is off by default. The visitor then picks it and approves who will receive the address.</p>
+          </li>
+          <li>
+            <h3>Derive</h3>
+            <p>The server works out the address from the connection itself. There is no field for a target, and a request that names one is rejected.</p>
+          </li>
+          <li>
+            <h3>Gate</h3>
+            <p>Local, private and reserved addresses stop here. Only a public address can leave the server, and only to approved destinations.</p>
+          </li>
+          <li>
+            <h3>Show</h3>
+            <p>The answer is size limited, trimmed and shown as plain text, with its source, its time and what it cannot prove.</p>
+          </li>
+        </ol>
+        <div class="prose">
+          <p>Results stay in the tab. There is no results database, no cookies and no analytics. The rate counters are hashed with a key that changes on restart and are removed within about a minute. A redacted export can be previewed before anything is shared, and reset clears the tab.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="controls">
+      <div class="wrap">
+        <p class="kicker">03 / controls</p>
+        <h2>What keeps it from being misused</h2>
+        <div class="checks three">
+          <div class="check">
+            <h3>No arbitrary target</h3>
+            <p>The address comes from the connection, never from the request. This avoids the server-side request forgery (SSRF) risk that a lookup tool usually has.</p>
+          </div>
+          <div class="check">
+            <h3>Trusted headers only</h3>
+            <p>Forwarding and fingerprint headers count only when they come from a proxy the operator listed. Otherwise the socket address is used.</p>
+          </div>
+          <div class="check">
+            <h3>Outbound limits</h3>
+            <p>Web lookups use HTTPS only, a fixed list of hosts, no redirects, a 256 KB response cap and a 5 second timeout.</p>
+          </div>
+          <div class="check">
+            <h3>Request limits</h3>
+            <p>4 KB request bodies, JSON only, 20 calls per visitor per minute, and unfinished requests are closed after 10 seconds. IPv6 visitors share one allowance per /64 range.</p>
+          </div>
+          <div class="check">
+            <h3>Safe display</h3>
+            <p>Text from the server is shown as text, never as HTML, and the content security policy allows no remote scripts.</p>
+          </div>
+          <div class="check">
+            <h3>Container setup</h3>
+            <p>A Dockerfile and Compose file run it as a non-root user with a read-only filesystem and no extra capabilities. The port is published on loopback only. It was built and run once on Linux.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="tests">
+      <div class="wrap">
+        <p class="kicker">04 / tests</p>
+        <h2>How it is tested</h2>
+        <div class="prose">
+          <p><code>npm test</code> runs 62 tests with Node's built-in test runner, and GitHub Actions runs them on Node.js 22 and 24 for every push. They cover every route and method, request size and content type rules, requests that try to name their own target, the per-visitor limit with a mocked clock, address classification against the IANA special-purpose registries, reverse DNS against a local fake DNS server, failing and slow lookup sources, redirects, and how the page handles answers it cannot read.</p>
+          <p>A second review of the code found real problems. Each one was fixed and now has a test:</p>
+          <ul class="did">
+            <li>A missing public file returned an empty 200 response instead of an error.</li>
+            <li>An IPv6 visitor could get a fresh request allowance by changing the end of their address. Allowances are now counted per /64 range.</li>
+            <li>Node only checks request timeouts every 30 seconds by default, so stalled connections stayed open. The check interval is now 1 second.</li>
+            <li>Some reserved ranges, such as Teredo and the benchmarking range, were treated as public.</li>
+            <li>LACNIC answers plain <code>application/json</code> with a 406, so every lookup for a Latin American address failed. Trying the live registries once found it.</li>
+          </ul>
+          <p>The test record in the repository also lists browser, accessibility and attack-script checks. Those scripts are not committed, so that part is a record and not something the repository can reproduce.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="limits">
+      <div class="wrap">
+        <p class="kicker">05 / limits</p>
+        <h2>What it does not do</h2>
+        <div class="callout">
+          <h3>Honest limits</h3>
+          <ul class="did">
+            <li>It is not deployed anywhere. Publishing the code does not run it, and it still needs HTTPS and connection limits at the front before public use.</li>
+            <li>The optional TLS fingerprint diagnostic (JA3, JA4 and HTTP/2 through Fingerproxy) has not been run against real TLS traffic. Its server side is tested with fake headers.</li>
+            <li>Reverse DNS has only run against a local test DNS server. The registry and InternetDB lookups were tried live a handful of times, so their accuracy and availability are not measured.</li>
+            <li>The page was only tested in Chromium, and only automated accessibility checks were run. Firefox, Safari, real phones and screen readers are untested.</li>
+            <li>It does not identify anyone. A browser attribute pattern is not a unique identity, and an IP record describes a connection.</li>
+            <li>No independent security audit has been done.</li>
+          </ul>
+        </div>
+
+        <h3 class="more-title">Credit</h3>
+        <div class="prose">
+          <p>MyIP and CreepJS were reference reading, and no code from them is included. Fingerproxy (Apache-2.0) is the optional TLS fingerprint integration and is not bundled. The sources list in the repository includes the OWASP SSRF Prevention Cheat Sheet, RFC 9224 for RDAP bootstrap data and RFC 6269 on shared IP addresses.</p>
+        </div>
+        <p class="case-links">
+          <a class="btn small primary" href="https://github.com/hamimabbu/layerlens">Repository</a>
+          <a class="btn small" href="https://github.com/hamimabbu/layerlens/blob/main/docs/THREAT-MODEL.md">Threat model</a>
+          <a class="btn small" href="https://github.com/hamimabbu/layerlens/blob/main/docs/VALIDATION.md">Test record</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <p class="nextcase">
+          <a href="ad-lab.html">Previous: Active Directory home lab</a>
+          <a href="index.html#cases">Back to all projects</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Hasibur Rahaman Hamim, Wollongong NSW. Last updated November 2026.</p>
+      <p>Plain HTML and CSS, with no scripts on this page. No cookies, no trackers, no third-party code.</p>
+    </div>
+  </footer>
+</body>
+</html>

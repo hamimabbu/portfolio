@@ -1,5 +1,5 @@
 title: Security projects
-keywords: security, secure, cyber, strongest, best project, security project, security projects, pentest, penetration, hacking, offensive, defensive
+keywords: security, secure, cyber, strongest, best project, security project, security projects, pentest, penetration, hacking, offensive, defensive, best work, his best work, best projects, his best projects, top project, top projects, top work, strongest work, strongest project, strongest projects, look at first, which one first, where to start looking, would you recommend, what do you recommend, what should i look at, what should i see, recommend a project, recommend one, worth looking at, worth a look, worth checking, worth seeing, good at hacking, good at security
 asks: What are Hamim's strongest security projects? | Which security projects has he built?
 follow: What did he build for the capstone? | How does the ARP detector work? | What is LayerLens?
 ---

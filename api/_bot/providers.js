@@ -1,12 +1,13 @@
 // Talks to the AI services. Each one is a small adapter, so adding another is one more function.
 // Anything unexpected throws, and the caller falls back to the next provider or to the plain facts.
 
-async function callGroq(cfg, prompt, fetchImpl, ms) {
-  const res = await fetchImpl(cfg.groqBase + "/chat/completions", {
+// Groq and most other services (OpenRouter, Cerebras, Mistral and more) share this request shape.
+async function callChat(base, key, model, prompt, fetchImpl, ms) {
+  const res = await fetchImpl(base + "/chat/completions", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: "Bearer " + cfg.groqKey },
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + key },
     body: JSON.stringify({
-      model: cfg.groqModel,
+      model,
       messages: [
         { role: "system", content: prompt.system },
         { role: "user", content: prompt.user },
@@ -24,6 +25,11 @@ async function callGroq(cfg, prompt, fetchImpl, ms) {
   if (choice.finish_reason === "length") throw new Error("cut off");
   return choice.message.content;
 }
+
+const callGroq = (cfg, prompt, fetchImpl, ms) => callChat(cfg.groqBase, cfg.groqKey, cfg.groqModel, prompt, fetchImpl, ms);
+
+// any other service that speaks the same way, set with the OTHER_AI_* settings
+const callOther = (cfg, prompt, fetchImpl, ms) => callChat(cfg.otherBase, cfg.otherKey, cfg.otherModel, prompt, fetchImpl, ms);
 
 async function callGemini(cfg, prompt, fetchImpl, ms) {
   const url = cfg.geminiBase + "/models/" + encodeURIComponent(cfg.geminiModel) + ":generateContent";
@@ -46,7 +52,7 @@ async function callGemini(cfg, prompt, fetchImpl, ms) {
   return candidate.content.parts.map((p) => (typeof p.text === "string" ? p.text : "")).join("");
 }
 
-const adapters = { groq: callGroq, gemini: callGemini };
+const adapters = { groq: callGroq, gemini: callGemini, other: callOther };
 
 function configuredProviders(cfg) {
   return cfg.providers.filter((name) => adapters[name] && cfg[name + "Key"]);

@@ -1,5 +1,5 @@
 title: What he is still learning
-keywords: learning, learn, next, plan, planning, planned, future, improve, growing, gaps, weakness, weaknesses, still, interested in learning, want to learn, wants to learn, plan to learn, plans to learn, going to learn, what is he learning, currently learning, learning now
+keywords: learning, learn, next, plan, planning, planned, future, improve, growing, gaps, weakness, weaknesses, still, interested in learning, want to learn, wants to learn, plan to learn, plans to learn, going to learn, what is he learning, currently learning, learning now, weak points, weak spots, not good at, bad at, areas to improve, areas for improvement, improve on, needs to improve, working on certs, studying for, certs is he working on, certs is he studying, certs is he doing, certs is he studying for, certs he is working on, certs is he after
 asks: What is he still learning? | What is next for him?
 follow: What did he do in the Active Directory lab? | What is he studying? | What are Hamim's strongest security projects?
 ---

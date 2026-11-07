@@ -1,5 +1,5 @@
 title: Education
-keywords: education, degree, university, uni, uow, study, studying, studies, student, qualification, qualifications, certificate, certificates, certification, certifications, cert, pnpt, tcm, google, coursera, course, courses, subjects, school, bachelor
+keywords: education, degree, university, uni, uow, study, studying, studies, student, qualification, qualifications, certificate, certificates, certification, certifications, cert, pnpt, tcm, google, coursera, course, courses, subjects, school, bachelor, what year is he in, which year is he in, year of study, masters, postgraduate, phd, certified, is he certified, certs, his certs
 asks: What is he studying? | What qualifications does he have?
 follow: Which tools and languages does he actually use? | What are Hamim's strongest security projects? | What is he still learning?
 links: Verify the Google certificate | https://coursera.org/verify/IBY0ERDN2PDL

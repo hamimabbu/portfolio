@@ -34,6 +34,8 @@ function parseTopic(file, raw) {
     title: fields.title,
     keywords: split(fields.keywords, ",").map(words).filter(Boolean),
     asks: split(fields.asks, "|"),
+    // short whole-question phrases, such as "show me a project". They only match when the visitor types exactly that.
+    exact: split(fields.exact, "|").map(words).filter(Boolean),
     follow: split(fields.follow, "|"),
     links: split(fields.links, ";").map((item) => split(item, "|")).filter((pair) => pair.length === 2),
     body: parts.slice(1).join("\n---\n").split("\n").map((s) => s.trim()).filter(Boolean),
@@ -46,13 +48,41 @@ function loadKnowledge(dir) {
 
   const byAsk = new Map();
   topics.forEach((t) => t.asks.forEach((q) => byAsk.set(words(q), t)));
+  topics.forEach((t) =>
+    t.exact.forEach((phrase) => {
+      const other = byAsk.get(phrase);
+      if (other && other !== t) throw new Error('"' + phrase + '" belongs to both ' + other.id + " and " + t.id);
+      byAsk.set(phrase, t);
+    })
+  );
 
   return { topics, byAsk };
 }
 
-// a question that matches one of the written questions word for word
+// "could you show me a project please" should work like "show me a project"
+const POLITE_START = /^(?:hey |hi |hello |ok |okay |so |and |please |pls |plz |can you |could you |would you |will you |can i |could i |may i |i want to |i would like to |i d like to |id like to |i wanna |let me |lets |let s )/;
+const POLITE_END = / (?:please|pls|plz|for me|thanks|thank you|thx)$/;
+
+function withoutPoliteness(text) {
+  let plain = words(text);
+  let before = "";
+  while (plain !== before) {
+    before = plain;
+    plain = plain.replace(POLITE_START, "").replace(POLITE_END, "").trim();
+  }
+  return plain;
+}
+
+// "what has hamim built" should work like "what has he built"
+function asHe(plain) {
+  const name = "(?:hasibur rahaman hamim|hasibur rahaman|hasibur|hamim|this guy|this person|this man|the guy)";
+  return plain.replace(new RegExp("\\b" + name + " s\\b", "g"), "his").replace(new RegExp("\\b" + name + "\\b", "g"), "he");
+}
+
+// a question that matches one of the written questions or short phrases word for word
 function findByAsk(kb, question) {
-  return kb.byAsk.get(words(question)) || null;
+  const plain = withoutPoliteness(question);
+  return kb.byAsk.get(words(question)) || kb.byAsk.get(plain) || kb.byAsk.get(asHe(plain)) || null;
 }
 
 // scores every topic by its keywords, and longer phrases count for more

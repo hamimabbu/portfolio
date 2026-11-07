@@ -27,9 +27,15 @@ test("every topic file loads with a title, questions and an answer", () => {
   });
 });
 
-test("no written question belongs to two topics", () => {
-  const total = kb.topics.reduce((sum, t) => sum + t.asks.length, 0);
-  assert.equal(kb.byAsk.size, total);
+test("no written question or short phrase belongs to two topics", () => {
+  const seen = new Map();
+  kb.topics.forEach((t) =>
+    t.asks.map(knowledge.words).concat(t.exact).forEach((phrase) => {
+      if (seen.has(phrase) && seen.get(phrase) !== t.id) assert.fail('"' + phrase + '" is in both ' + seen.get(phrase) + " and " + t.id);
+      seen.set(phrase, t.id);
+    })
+  );
+  assert.equal(kb.byAsk.size, seen.size);
 });
 
 test("every follow-up and starter question has its own written answer", () => {

@@ -1,5 +1,5 @@
 title: Software projects
-keywords: software, developer, develop, development, backend, programming, coding, software engineer
+keywords: software, developer, develop, development, backend, programming, coding, software engineer, can he code, does he code, can he program, does he program, is he technical, is he a developer, is he a programmer, is he an engineer, how good is his programming, made any apps, built any apps, built an app, made an app, built a website, made a website, build websites, built websites, built a game, made a game, built apps, made any websites, built any websites
 asks: What has he built in software? | Which software projects has he built?
 follow: What is the online retail system? | What is TalentMatch Pro? | What is LayerLens?
 ---

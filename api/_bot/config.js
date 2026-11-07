@@ -17,7 +17,7 @@ function getConfig(env = process.env) {
     maxQuestion: 200,
 
     // order matters: the first provider with a key is tried first
-    providers: list(env.AI_PROVIDERS, ["groq", "gemini"]),
+    providers: list(env.AI_PROVIDERS, ["groq", "gemini", "other"]),
 
     groqKey: (env.GROQ_API_KEY || "").trim(),
     groqModel: env.GROQ_MODEL || "openai/gpt-oss-20b",
@@ -26,6 +26,12 @@ function getConfig(env = process.env) {
     geminiKey: (env.GEMINI_API_KEY || "").trim(),
     geminiModel: env.GEMINI_MODEL || "gemini-2.5-flash",
     geminiBase: env.GEMINI_BASE_URL || "https://generativelanguage.googleapis.com/v1beta",
+
+    // Optional: any other service that uses the same request shape as Groq (OpenRouter, Cerebras, Mistral and more).
+    // It only counts as set when the key, the web address and the model name are all given.
+    otherBase: (env.OTHER_AI_BASE_URL || "").trim().replace(/\/+$/, ""),
+    otherModel: (env.OTHER_AI_MODEL || "").trim(),
+    otherKey: env.OTHER_AI_BASE_URL && env.OTHER_AI_MODEL ? (env.OTHER_AI_KEY || "").trim() : "",
 
     // A random marker hidden in the AI instructions. If it ever shows up in an answer, the answer is dropped.
     canary: env.CANARY || crypto.randomBytes(8).toString("hex"),

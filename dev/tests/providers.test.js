@@ -122,3 +122,29 @@ test("logs never contain keys, questions or answers", async () => {
   assert.ok(logs.length === 2);
   ["gk-secret-key", "gm-secret-key", "SYSTEM TEXT", "hello", "bad key"].forEach((s) => assert.ok(!text.includes(s), s));
 });
+
+test("any other service with the same request shape can be added, and it takes over when the rest fail", async () => {
+  const groq = await fakeService(() => ({ status: 429, json: { error: "limit" } }));
+  const gemini = await fakeService(() => ({ status: 503, json: {} }));
+  const other = await fakeService(() => groqReply("hello from the third service"));
+  const { cfg, options, logs } = setup(groq, gemini, {
+    OTHER_AI_KEY: "ok-secret-key", OTHER_AI_BASE_URL: other.url + "/", OTHER_AI_MODEL: "free-model",
+  });
+  const result = await askModels(cfg, prompt, options);
+  await Promise.all([groq.close(), gemini.close(), other.close()]);
+
+  assert.deepEqual(result, { provider: "other", text: "hello from the third service" });
+  assert.equal(other.seen[0].url, "/chat/completions");
+  assert.equal(other.seen[0].headers.authorization, "Bearer ok-secret-key");
+  assert.equal(other.seen[0].body.model, "free-model");
+  assert.deepEqual(logs.map((l) => l.provider), ["groq", "gemini"]);
+  assert.ok(!JSON.stringify(logs).includes("secret"));
+});
+
+test("the extra service only counts when the key, address and model are all set", () => {
+  const base = { GROQ_API_KEY: "", GEMINI_API_KEY: "" };
+  assert.deepEqual(configuredProviders(getConfig(Object.assign({ OTHER_AI_KEY: "k" }, base))), []);
+  assert.deepEqual(configuredProviders(getConfig(Object.assign({ OTHER_AI_KEY: "k", OTHER_AI_BASE_URL: "http://x.test" }, base))), []);
+  assert.deepEqual(configuredProviders(getConfig(Object.assign({ OTHER_AI_BASE_URL: "http://x.test", OTHER_AI_MODEL: "m" }, base))), []);
+  assert.deepEqual(configuredProviders(getConfig(Object.assign({ OTHER_AI_KEY: "k", OTHER_AI_BASE_URL: "http://x.test", OTHER_AI_MODEL: "m" }, base))), ["other"]);
+});

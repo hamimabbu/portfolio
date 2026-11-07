@@ -1,0 +1,11 @@
+title: Where to start
+keywords: i have a question, i have some questions, where should i start, where do i start, not sure what to ask, dont know what to ask, nothing in mind, just browsing, just looking
+asks: What should I ask? | Where should I start?
+exact: show me something | show me anything | show me more | show me | tell me more | tell me | more | more info | more information | what else | anything else | something else | help | help me | i need help | need help | i have a question | i have questions | ask you something | ask something | i want to ask something | just browsing | just looking | surprise me | something interesting | anything interesting | what is this | what is this site | what is this website | what is this page | what is this place | what is this thing | whats this | explain this site | explain this page
+follow: What are Hamim's strongest security projects? | Which tools and languages does he actually use? | What roles is he looking for?
+---
+This is Hamim's portfolio, and I answer questions about him. What would you like to know?
+His work: the security projects, the team projects from his degree, or LayerLens.
+His skills: the tools and languages he has actually used.
+His background: his studies, his work history and when he is available.
+Pick one of the questions below, or type your own.

@@ -1,6 +1,7 @@
 title: Work history
-keywords: worked, work history, work experience, where did he work, where does he work, does he work, previous jobs, current job, current employer, job history, employer, employment, employed, any experience, what experience, his experience, job experience, professional experience, industry experience, relevant experience, years of experience, coles, petroleum, harvest, career, part time, at coles, job at coles, role at coles, coles group, united petroleum, at united petroleum, south coast harvest, at south coast harvest
+keywords: worked, work history, work experience, where did he work, where does he work, does he work, previous jobs, current job, current employer, job history, employer, employment, employed, any experience, what experience, his experience, job experience, professional experience, industry experience, relevant experience, years of experience, coles, petroleum, harvest, career, part time, at coles, job at coles, role at coles, coles group, united petroleum, at united petroleum, south coast harvest, at south coast harvest, has he worked, got experience, work experience he has, had a job, ever had a job, has he had a job, ever worked, has he ever worked, working at the moment, currently working, working now, does he work now, got a job, has he got a job, got a job now
 asks: Where has he worked? | Does he have work experience?
+exact: does he have experience | does he have any experience | has he got experience | is he experienced | what experience does he have | has he got any experience | is he working | is he working now | is he currently working
 follow: What roles is he looking for? | What is he studying? | How can I contact him?
 ---
 Coles Group: team member, part-time (Nov 2024 to present, Wollongong).

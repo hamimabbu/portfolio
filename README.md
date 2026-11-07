@@ -34,7 +34,7 @@ Open index.html in a browser. The terminal works from the folder, using the fact
 
 Short commands are answered in the browser from the JSON block at the bottom of index.html and send nothing anywhere. Type help to see what it knows. A visitor can type login followed by a name to put it in the prompt, and whoareyou to see what their browser tells every website.
 
-A longer question goes to the assistant. It answers from the knowledge files, says so when a fact is not there, and works without any AI key. If a key is set, an AI model can word the answer, and the answer is checked against the same facts before it is shown. To change what the assistant knows, edit the text files. There is no training step.
+A longer question goes to the assistant. It answers from the knowledge files, says so when a fact is not there, and works without any AI key. If a key is set, an AI model can pick the topic when the keywords find nothing and can word the answer, and the answer is checked against the same facts before it is shown. Up to three free AI services can be set, and each takes over when the one before it is down or out of quota. To change what the assistant knows, edit the text files. There is no training step.
 
 ## Security choices
 

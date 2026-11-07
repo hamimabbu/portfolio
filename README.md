@@ -1,6 +1,6 @@
 # Portfolio
 
-Live site: https://hasibur-hamim.vercel.app
+Live site: https://hasibur-rahaman-hamim.vercel.app
 
 Source of the portfolio site of Hasibur Rahaman Hamim, a final-year Computer Science student (cyber security major) at the University of Wollongong, graduating December 2026.
 

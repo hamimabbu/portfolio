@@ -68,7 +68,7 @@
   // only the sites this page already links to are allowed as link targets
   function safeHref(url) {
     const outside = /^https:\/\/(github\.com|www\.linkedin\.com|coursera\.org)\//;
-    const sameSite = /^[a-z0-9-]+\.html$/;
+    const sameSite = /^([a-z0-9-]+\.html|#[a-z-]+)$/;
     return outside.test(url) || sameSite.test(url) ? url : null;
   }
 
@@ -119,9 +119,34 @@
     button.textContent = text;
     button.addEventListener("click", function () {
       run(text, !isCommand);
+      focusInput();
     });
     p.appendChild(button);
     log.appendChild(p);
+  }
+
+  // a shortcut that types the start of a command for the visitor, so the next thing they do is type
+  function addFill(label, text) {
+    const p = document.createElement("p");
+    p.className = "out ask";
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "ask-btn fill";
+    button.textContent = label;
+    button.addEventListener("click", function () {
+      input.value = text;
+      input.focus({ preventScroll: true });
+      input.setSelectionRange(text.length, text.length);
+    });
+    p.appendChild(button);
+    log.appendChild(p);
+  }
+
+  // After a tap, the cursor goes back to the box so the next question can be typed straight away.
+  // Only with a mouse or trackpad: on a phone it would pop the keyboard up over the answer.
+  const finePointer = !!(window.matchMedia && window.matchMedia("(pointer: fine)").matches);
+  function focusInput() {
+    if (finePointer) input.focus({ preventScroll: true });
   }
 
   function addAskList(title, questions) {
@@ -288,13 +313,13 @@
     if (!text) {
       addLine("Check a list of skills or a role against what this site shows. Separate the items with commas.", "dim");
       addLine("For example (tap it to run it):", "dim");
-      addAsk("fit soc analyst, python, splunk, incident response", true);
+      addAsk("fit it support, active directory, python, windows server", true);
       return;
     }
 
     const result = fit.check(text);
     if (!result.items.length) {
-      addLine("I could not pick a skill or a role out of that. Try: fit python, splunk, soc analyst", "dim");
+      addLine("I could not pick a skill or a role out of that. Try: fit python, active directory, it support", "dim");
       return;
     }
 
@@ -329,6 +354,8 @@
 
   commands.contact = function () {
     addLine(data.contactNote);
+    addLinkRow("contact", [["open the contact section", "#contact"]]);
+    addLinkRow("cv", [["view or download my CV", "cv.html"]]);
     data.links.slice(0, 2).forEach(function (item) {
       addLinkRow(item[0], [[item[1], item[2]]]);
     });
@@ -454,9 +481,6 @@
 
   function setName(name) {
     userName = name;
-    ps1.textContent = promptText();
-    const title = panel.querySelector(".panel-bar span");
-    if (title) title.textContent = name + "@hamim: ~";
   }
 
   commands.login = function (arg) {
@@ -608,7 +632,7 @@
     const links = Array.isArray(body.links)
       ? body.links
           .filter(function (pair) { return Array.isArray(pair) && typeof pair[0] === "string" && typeof pair[1] === "string"; })
-          .slice(0, 5)
+          .slice(0, 7)
           .map(function (pair) { return [pair[0].slice(0, 60), pair[1].slice(0, 200)]; })
       : [];
 
@@ -693,7 +717,7 @@
       return;
     }
     busy = true;
-    const waiting = addLine("one moment...", "dim");
+    const waiting = addLine("one moment...", "dim thinking");
     let result;
     try {
       result = await fetchAnswer(question);
@@ -763,20 +787,6 @@
   const foot = document.createElement("div");
   foot.className = "term-foot";
 
-  const chips = document.createElement("div");
-  chips.className = "chips";
-  const chipNames = fit ? ["help", "projects", "skills", "fit", "contact"] : ["help", "projects", "skills", "contact"];
-  chipNames.forEach(function (name) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "chip";
-    button.textContent = name;
-    button.addEventListener("click", function () {
-      run(name);
-    });
-    chips.appendChild(button);
-  });
-
   const form = document.createElement("form");
   form.className = "term-form";
   form.setAttribute("autocomplete", "off");
@@ -784,26 +794,38 @@
   const label = document.createElement("label");
   label.className = "sr-only";
   label.htmlFor = "term-input";
-  label.textContent = "Type a command or a question";
+  label.textContent = "Ask a question or type a command";
 
   const ps1 = document.createElement("span");
   ps1.className = "term-ps1";
   ps1.setAttribute("aria-hidden", "true");
-  ps1.textContent = promptText();
+  ps1.textContent = "\u203A";
 
   const input = document.createElement("input");
   input.id = "term-input";
   input.type = "text";
   input.maxLength = 120;
-  input.placeholder = "ask a question, or type help";
+  input.placeholder = "Ask a question, or type help";
   input.spellcheck = false;
   input.setAttribute("autocomplete", "off");
   input.setAttribute("autocapitalize", "off");
   input.setAttribute("autocorrect", "off");
   input.setAttribute("enterkeyhint", "send");
 
-  form.append(label, ps1, input);
-  foot.append(chips, form);
+  const send = document.createElement("button");
+  send.type = "submit";
+  send.className = "term-send";
+  send.textContent = "Send";
+
+  form.append(label, ps1, input, send);
+
+  const hint = document.createElement("p");
+  hint.className = "term-hint";
+  const helpWord = document.createElement("b");
+  helpWord.textContent = "help";
+  hint.append("Type ", helpWord, " to see every command.");
+
+  foot.append(form, hint);
   panel.querySelector(".panel-body").appendChild(foot);
 
   form.addEventListener("submit", function (event) {
@@ -819,7 +841,7 @@
     const matches = Object.keys(commands).filter(function (name) {
       return name.indexOf(text) === 0;
     });
-    if (matches.length !== 1) return false;
+    if (matches.length !== 1 || matches[0] === text) return false; // nothing left to complete, so Tab moves on to Send
     input.value = matches[0];
     return true;
   }
@@ -851,28 +873,37 @@
   window.addEventListener("resize", updateMore);
   new MutationObserver(updateMore).observe(log, { childList: true });
 
-  // switch the card from a plain list of facts to the live terminal
-  const cursor = log.querySelector(".cursor");
-  if (cursor) cursor.remove();
+  // Switch the card from a plain list of facts to the live question box.
+  // The facts list is for visitors without scripts. The left side of the page already says the same thing.
+  log.replaceChildren();
   log.tabIndex = 0; // so keyboard users can scroll the log
-  panel.setAttribute("aria-label", "Interactive terminal");
+  panel.setAttribute("aria-label", "Ask the site assistant");
   panel.classList.add("live");
+  const stateTag = panel.querySelector(".panel-bar .state");
+  if (stateTag) stateTag.textContent = "AI assistant";
 
   // A personal link such as ?ref=acme puts that name in the prompt.
   // The name is read here in the browser. The terminal does not send or save it.
   const linkName = cleanName(new URLSearchParams(window.location.search).get("ref") || "");
   if (linkName) {
     setName(linkName);
-    const firstPrompt = log.querySelector(".prompt b");
-    if (firstPrompt) firstPrompt.textContent = promptText();
     addLine("Hello " + linkName + ". Your link has this name in it, so the prompt shows it. The terminal keeps it in this tab and sends nothing. Type logout to go back to visitor.");
   }
 
+  // says what this is, what it knows and how to use it, before anyone has to guess
+  if (typeof data.welcome === "string") addLine(data.welcome, "welcome");
   addLine(data.hint, "dim");
 
-  // example questions, so nobody has to think of one
+  // a few questions to tap, so nobody has to think of one
   if (bot && Array.isArray(bot.starters) && bot.starters.length) {
-    addAskList("Try asking:", bot.starters.slice(0, 6));
-    log.scrollTop = log.scrollHeight;
+    bot.starters.slice(0, 4).forEach(function (question) {
+      addAsk(question);
+    });
   }
+  if (Array.isArray(data.shortcuts)) {
+    data.shortcuts.slice(0, 2).forEach(function (item) {
+      if (item && typeof item.label === "string" && typeof item.fill === "string") addFill(item.label, item.fill);
+    });
+  }
+  log.scrollTop = 0;
 })();

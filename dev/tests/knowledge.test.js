@@ -66,14 +66,17 @@ test("the page and the knowledge files agree on the facts", () => {
 test("key facts match between the terminal data and the knowledge files", () => {
   const all = kb.topics.map((t) => t.body.join(" ")).join(" ");
   const facts = [
-    "December 2026", "Wollongong", "30+ commits", "14 unit tests", "3 alerts", "86 end-to-end tests",
+    "Wollongong", "30+ commits", "14 unit tests", "3 alerts", "86 end-to-end tests",
     "14 backend unit tests", "18-screen", "19-slide", "marvel.local", "Java 21", "Micromax Technology",
-    "PNPT", "Windows Server 2022", "CSCI262", "CSCI318", "CSIT314", "CSCI316", "LayerLens", "62 automated tests",
+    "Windows Server 2022", "CSCI262", "CSCI318", "CSIT314", "CSCI316", "LayerLens", "62 automated tests",
   ];
   facts.forEach((fact) => {
     assert.ok(all.includes(fact), "knowledge is missing: " + fact);
     assert.ok(siteText.includes(fact), "site is missing: " + fact);
   });
+  // the graduation date is written in full in the knowledge files and shortened on the site
+  assert.ok(all.includes("December 2026"), "knowledge is missing: December 2026");
+  assert.ok(siteText.includes("Dec 2026"), "site is missing: Dec 2026");
 });
 
 test("links in the knowledge files are links the site already has", () => {
@@ -111,7 +114,6 @@ const lookups = [
   ["what about his loan project", "loan-prediction"],
   ["any machine learning", "loan-prediction"],
   ["where did he work before", "work"],
-  ["what is the pnpt", "education"],
   ["tell me about kerberoasting", "ad-lab"],
   ["is he studying anything now", "education"],
   ["what is the talentmatch app", "talentmatch"],
@@ -119,6 +121,10 @@ const lookups = [
   ["which uni does he go to", "education"],
   ["can he start immediately", "availability"],
   ["tell me about the expiry app", "expirytracker"],
+  ["did he build this chatbot himself", "site-assistant"],
+  ["how was this site built", "site-assistant"],
+  ["who made this website", "site-assistant"],
+  ["is the chatbot tested", "site-assistant"],
   ["what did he do with wireshark", "arp-detector"],
   // questions a recruiter asks that used to find nothing, or the wrong topic
   ["what is his name", "about"],
@@ -228,6 +234,20 @@ test("the project count in the all-projects answer matches the projects on the p
   const count = termData().projects.length;
   const body = kb.topics.find((x) => x.id === "projects").body.join(" ");
   assert.ok(body.includes("lists " + numberWords[count] + " projects"), "the projects topic does not say " + numberWords[count]);
+});
+
+test("the number of attack inputs named on the page is the number the red-team script really sends", () => {
+  const attacks = require("./attacks");
+  const total = Object.values(attacks.blocked).reduce((sum, list) => sum + list.length, 0) + attacks.semantic.length;
+  const onPage = [...siteText.matchAll(/(\d+) attack inputs/g)].map((m) => Number(m[1]));
+  assert.ok(onPage.length > 0, "the page no longer mentions the attack inputs");
+  onPage.forEach((n) => assert.equal(n, total, "the page says " + n + " attack inputs, the script sends " + total));
+  kb.topics.forEach((t) => {
+    t.body.join(" ").replace(/(\d+) attack inputs/g, (all, n) => {
+      assert.equal(Number(n), total, t.id + " says " + n + " attack inputs");
+      return all;
+    });
+  });
 });
 
 test("each project number has a follow-up question that leads to that project", () => {

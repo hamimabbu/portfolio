@@ -3,8 +3,9 @@ keywords: security, secure, cyber, strongest, best project, security project, se
 asks: What are Hamim's strongest security projects? | Which security projects has he built?
 follow: What did he build for the capstone? | How does the ARP detector work? | What is LayerLens?
 ---
-Four security projects, each with a case study page:
-Upload scanner, the backend of a team capstone for Micromax Technology (Mar 2026 to present).
-ARP poisoning detector in Python and Scapy (Oct 2025), 14 unit tests.
-Active Directory home lab, marvel.local (Jul 2026 to present): built, attacks come next.
-LayerLens (Nov 2026): a Node.js web app with a written threat model and 62 automated tests. Not deployed.
+Five projects with a security side, strongest first:
+Upload scanner, the backend of a team capstone for Micromax Technology (Mar 2026 to present). Has a case study page.
+The site assistant, the chat on this page, built on his own: input filter, rate limits and a script of 100 attack inputs that finds no leaks.
+LayerLens (Nov 2026): a Node.js web app with a written threat model and 62 automated tests. Not deployed. Has a case study page.
+Active Directory home lab, marvel.local (Jul 2026 to present): built, attacks come next. Has a case study page.
+ARP poisoning detector in Python and Scapy (Oct 2025), 14 unit tests. Has a case study page.

@@ -2,6 +2,7 @@
 // To change what the assistant knows, edit those text files. There is no training step.
 const fs = require("fs");
 const path = require("path");
+const persona = require("./persona");
 
 // lower case, letters and numbers only, one space between words
 function words(text) {
@@ -73,10 +74,12 @@ function withoutPoliteness(text) {
   return plain;
 }
 
-// "what has hamim built" should work like "what has he built"
+// "what has hamim built" should work like "what has he built" (the names and pronouns come from persona.js)
 function asHe(plain) {
-  const name = "(?:hasibur rahaman hamim|hasibur rahaman|hasibur|hamim|this guy|this person|this man|the guy)";
-  return plain.replace(new RegExp("\\b" + name + " s\\b", "g"), "his").replace(new RegExp("\\b" + name + "\\b", "g"), "he");
+  const name = "(?:" + persona.nameForms.join("|") + ")";
+  return plain
+    .replace(new RegExp("\\b" + name + " s\\b", "g"), persona.possessive)
+    .replace(new RegExp("\\b" + name + "\\b", "g"), persona.pronoun);
 }
 
 // a question that matches one of the written questions or short phrases word for word

@@ -121,4 +121,5 @@ function createHandler(options = {}) {
   };
 }
 
-module.exports = { createHandler };
+// the contact handler (contact.js) reuses these three
+module.exports = { createHandler, readBody, originAllowed, clientId };

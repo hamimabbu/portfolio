@@ -2856,13 +2856,47 @@ h2,
 
   .cv-skills div {
     display: grid;
-    grid-template-columns: 34mm minmax(0, 1fr);
+    grid-template-columns: 42mm minmax(0, 1fr);
     column-gap: 4mm;
     margin: 0 0 2px;
   }
 
   .cv-skills dd {
     margin: 0;
+  }
+
+  /* name, one line about the goal and the contact line sit centred at the top, like the Google samples */
+  .page-head h1,
+  .page-head .lead {
+    text-align: center;
+  }
+
+  .page-head .lead {
+    margin: 0 auto 4px;
+    font-size: 9.8pt;
+  }
+
+  .cv-contact {
+    justify-content: center;
+    gap: 0;
+    margin: 0 0 8px;
+    text-align: center;
+  }
+
+  .cv-contact .lbl {
+    display: none;
+  }
+
+  .cv-contact > span + span::before {
+    content: "|";
+    margin: 0 0.7em;
+    color: #555;
+  }
+
+  /* the projects start at the top of page two, so page one holds the summary, skills and jobs */
+  .cv h2.cv-newpage {
+    break-before: page;
+    margin-top: 0;
   }
 }
 

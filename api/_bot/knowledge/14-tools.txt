@@ -1,10 +1,10 @@
 title: Tools and languages
 keywords: tools, tool, languages, language, programming language, python, c++, java, javascript, node, node js, nodejs, react, express, spring, kafka, mongodb, sqlite, sql, git, github actions, docker, linux, windows, kali, scapy, wireshark, junit, postman, cypress, spark, tensorflow, keras, skills, skill, stack, tech, technology, technologies
-asks: Which tools and languages does he actually use? | Which tools and languages does he use? | What programming languages does he know?
+asks: Which tools and languages does he actually use? | What programming languages does he know?
 exact: what can he do | what is he capable of | what are his skills | what does he know | what can hamim do
 follow: What are Hamim's strongest security projects? | What has he built in software? | What is he still learning?
 ---
-Security: Scapy, Wireshark, Kali Linux, web app threat modelling, MITRE ATT&CK mapping, an Active Directory lab.
+Security: Scapy, Wireshark, Kali Linux, web app threat modelling, MITRE ATT&CK mapping, an Active Directory lab. Studying for the PNPT.
 Systems: Windows Server 2022, Windows 11, Active Directory, Group Policy, VirtualBox, Linux.
 Software: Python, C++, Node.js, Express, React, Java 21 with Spring Boot and Kafka, REST APIs with JWT, JUnit, Postman, Cypress, MongoDB, SQLite, Spark, TensorFlow, Keras, Git, GitHub Actions, Docker.
 To check one tool, ask: does he know Wireshark? For a whole job ad, use the fit command in the terminal.

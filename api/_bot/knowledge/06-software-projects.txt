@@ -3,8 +3,8 @@ keywords: software, developer, develop, development, backend, programming, codin
 asks: What has he built in software? | Which software projects has he built?
 follow: What is the online retail system? | What is TalentMatch Pro? | What is LayerLens?
 ---
-The capstone backend for a sponsor (Node.js, Express, MongoDB), two projects on his own (the site assistant and LayerLens), and team projects from his degree:
+Mostly team projects from his degree, plus LayerLens on his own:
 Online retail system (CSCI318, in progress): Java 21, Spring Boot, Kafka.
 TalentMatch Pro (CSIT314, finished): Node.js, Express, SQLite, JWT.
 Loan default prediction (CSCI316, finished): Spark, TensorFlow, Keras.
-On his own: the site assistant, the chat on this page (Node.js, serverless functions on Vercel), and LayerLens (Node.js, 62 automated tests). ExpiryTracker is an app idea that is not built yet.
+Also LayerLens (Node.js, 62 automated tests) and the capstone backend. ExpiryTracker is an app idea that is not built yet.

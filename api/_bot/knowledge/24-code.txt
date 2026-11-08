@@ -3,8 +3,8 @@ keywords: github, git hub, his github, github profile, github account, github li
 asks: Where can I see his code? | Does he have a GitHub?
 exact: demo | is there a demo | can i see a demo | can i try it | is there a live demo | is it live | does it have a demo | any demos
 follow: What did he build for the capstone? | How does the ARP detector work? | What is LayerLens?
-links: GitHub profile | https://github.com/hamimabbu ; Active Directory lab repository | https://github.com/hamimabbu/active-directory-home-lab ; LayerLens repository | https://github.com/hamimabbu/layerlens ; Site assistant repository | https://github.com/hamimabbu/site-assistant ; Portfolio repository | https://github.com/hamimabbu/portfolio ; ARP detector repository | https://github.com/hamimabbu/arp-poisoning-detector ; Capstone team repository | https://github.com/Shakif-a/buscal-app
+links: GitHub profile | https://github.com/hamimabbu ; Active Directory lab repository | https://github.com/hamimabbu/active-directory-home-lab ; LayerLens repository | https://github.com/hamimabbu/layerlens ; ARP detector repository | https://github.com/hamimabbu/arp-poisoning-detector ; Capstone team repository | https://github.com/Shakif-a/buscal-app
 ---
-His GitHub profile is github.com/hamimabbu. Public there: the site assistant (its own repository), this portfolio site, LayerLens (MIT licence), the Active Directory lab and the ARP detector. The ARP detector is a public repository, but it began as a group assignment.
+His GitHub profile is github.com/hamimabbu. Public there: the Active Directory lab, LayerLens (MIT licence) and the ARP detector. The ARP detector is a public repository, but it began as a group assignment.
 TalentMatch Pro is not public. The capstone is a stripped-down team repository.
 The site does not link a live demo for any project. LayerLens is not deployed.

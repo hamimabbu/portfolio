@@ -3,5 +3,5 @@ keywords: career goal, career goals, career plan, career plans, career path, lon
 asks: What are his career goals? | Why did he choose cyber security?
 follow: What roles is he looking for? | What is he still learning? | What are Hamim's strongest security projects?
 ---
-His first goal is a graduate role in IT support, systems or software, with a security focus.
+His first goal is a graduate role in security, such as SOC analyst, security analyst or junior penetration tester. He is studying for the PNPT.
 The site does not say why he chose cyber security, which kind of security work he likes best, or what his longer-term plans are, so LinkedIn is the best place to ask him.

@@ -4,5 +4,5 @@ asks: Does this site track me? | What does the assistant do with my questions?
 follow: Is this assistant using AI? | What are Hamim's strongest security projects? | How can I contact him?
 ---
 No cookies, no analytics and no third-party code. Terminal commands run in your browser and send nothing.
-Longer questions go to a small assistant on the same host as this site. Questions are not stored, and the code does not log who asked. A message sent through the contact form goes through the same host to a mail service, and nothing is stored here. The host may keep ordinary server logs.
+Longer questions go to a small assistant on the same host as this site. Questions are not stored, and the code does not log who asked. The host may keep ordinary server logs.
 If an AI model is switched on, the question text is sent to its provider to pick a topic and word the answer. A free AI service may keep or use what it receives, so please keep personal details out of your questions.

@@ -102,9 +102,9 @@ test("every case study page an answer points to exists", () => {
     assert.ok(label.length > 0);
     assert.ok(fs.existsSync(SITE + "/" + page), page);
   });
-  assert.deepEqual(fit.casePages([6, 7]), []);
-  assert.deepEqual(fit.casePages([2, 3]), [fit.CASE_PAGES[3]]);
-  assert.deepEqual(fit.casePages([5, 3, 1]), [fit.CASE_PAGES[5], fit.CASE_PAGES[3]]);
+  assert.deepEqual(fit.casePages([5, 6]), []);
+  assert.deepEqual(fit.casePages([4, 5]), [fit.CASE_PAGES[4]]);
+  assert.deepEqual(fit.casePages([2, 3, 1]), [fit.CASE_PAGES[2], fit.CASE_PAGES[3]]);
 });
 
 // ---------- everything the site lists as a skill is recognised ----------
@@ -126,18 +126,11 @@ test("every skill, tool and subject listed on the site is found by the check", (
   assert.deepEqual(missed, []);
 });
 
-test("the roles he is looking for are target roles, and the security roles are only related work", () => {
-  ["IT support", "software developer"].forEach((role) => {
+test("every role the site names is a target role or an also-open-to role", () => {
+  ["SOC analyst", "security analyst", "junior penetration tester", "IT support", "software developer"].forEach((role) => {
     const item = fit.check(role).items[0];
     assert.equal(item.status, "yes", role);
-    assert.equal(item.label, "target role", role);
-  });
-  // he does not list these as roles he is after, so the check never calls them a target
-  ["SOC analyst", "security analyst", "junior penetration tester"].forEach((role) => {
-    const item = fit.check(role).items[0];
-    assert.equal(item.status, "part", role);
-    assert.equal(item.label, "related", role);
-    assert.ok(/not a role he lists/i.test(item.detail), role + ": " + item.detail);
+    assert.ok(["target role", "also open to"].includes(item.label), role);
   });
 });
 
@@ -146,8 +139,8 @@ test("the roles he is looking for are target roles, and the security roles are o
 test("a mixed list gets an honest answer for each item", () => {
   const r = fit.check("SOC analyst, Python, Splunk, incident response, Kerberoasting, C++");
   assert.deepEqual(ids(r), ["soc-analyst", "python", "siem", "incident-response", "kerberos", "cpp"]);
-  assert.deepEqual(r.items.map((i) => i.status), ["part", "yes", "no", "no", "learn", "part"]);
-  assert.deepEqual(r.counts, { yes: 1, part: 2, learn: 1, no: 2 });
+  assert.deepEqual(r.items.map((i) => i.status), ["yes", "yes", "no", "no", "learn", "part"]);
+  assert.deepEqual(r.counts, { yes: 2, part: 1, learn: 1, no: 2 });
   assert.equal(r.items[2].name, "Splunk", "a group entry shows what was typed");
   assert.ok(r.items[2].detail.startsWith("Closest on the site:"));
 });
@@ -284,7 +277,7 @@ test("a skill answer says plainly what the site shows", () => {
   assert.ok(kerb.lines[0].includes("has not been run yet"));
 
   const role = fit.answerQuestion("Does he have SOC analyst experience?");
-  assert.ok(role.lines[0].includes("The site shows no SOC job."));
+  assert.ok(role.lines[0].includes("The site shows no paid job in it."));
 });
 
 test("questions that are not about a skill are left to the normal search", () => {
@@ -353,9 +346,9 @@ test("a plain 'is he a team player' still gets the teamwork line when nothing el
 });
 
 test("working towards a certificate gets one line for each, with no warning about unknown words", () => {
-  const a = fit.answerQuestion("Is he working towards OSCP or Python?");
-  assert.deepEqual(a.ids, ["certs", "python"]);
-  assert.deepEqual(a.statuses, ["no", "yes"]);
+  const a = fit.answerQuestion("Is he working towards OSCP or PNPT?");
+  assert.deepEqual(a.ids, ["certs", "pnpt"]);
+  assert.deepEqual(a.statuses, ["no", "learn"]);
   assert.ok(!a.lines.some((l) => l.startsWith("I did not recognise")));
 });
 
@@ -431,29 +424,27 @@ test("question answers never throw on strange input", () => {
 
 test("the answer also gives project numbers for the case study links", () => {
   const a = fit.answerQuestion("Does he know Wireshark and Kerberoasting?");
-  assert.deepEqual(a.projects, [4, 5]);
-  assert.deepEqual(fit.casePages(a.projects), [fit.CASE_PAGES[4], fit.CASE_PAGES[5]]);
+  assert.deepEqual(a.projects, [2, 3]);
+  assert.deepEqual(fit.casePages(a.projects), [fit.CASE_PAGES[2], fit.CASE_PAGES[3]]);
 });
 
 // ---------- LayerLens ----------
 
 test("project numbers follow the order of the projects on the page", () => {
-  assert.deepEqual(termData.projects.map((p) => p.n), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.deepEqual(termData.projects.map((p) => p.n), [1, 2, 3, 4, 5, 6, 7, 8]);
   const named = (n) => termData.projects[n - 1].name;
   const want = {
     mongodb: ["OKR tracking module: secure evidence upload"],
     arp: ["ARP poisoning detector"],
     kerberos: ["Active Directory home lab"],
     containers: ["LayerLens: what a browser and a connection reveal"],
-    "github-actions": ["LayerLens: what a browser and a connection reveal", "ARP poisoning detector"],
+    "github-actions": ["ARP poisoning detector", "LayerLens: what a browser and a connection reveal"],
     "threat-model": ["LayerLens: what a browser and a connection reveal"],
     java: ["AI-powered online retail system"],
     "spring-kafka": ["AI-powered online retail system"],
     sqlite: ["TalentMatch Pro recruitment platform"],
     spark: ["Loan default prediction with Apache Spark"],
     mobile: ["ExpiryTracker"],
-    serverless: ["Site assistant: a chatbot that sticks to the facts"],
-    "prompt-injection": ["Site assistant: a chatbot that sticks to the facts"],
   };
   Object.entries(want).forEach(([id, names]) => {
     const entry = fit.ENTRIES.find((e) => e.id === id);
@@ -495,8 +486,8 @@ test("the Docker, CI and Kubernetes answers say what LayerLens shows and what it
   const docker = fit.answerQuestion("Does he have Docker experience?");
   assert.ok(docker.lines[0].startsWith("Docker and containers: partly shown on the site."));
   assert.ok(docker.lines[0].includes("built and run once on Linux"));
-  assert.deepEqual(docker.projects, [3]);
-  assert.deepEqual(fit.casePages(docker.projects), [fit.CASE_PAGES[3]]);
+  assert.deepEqual(docker.projects, [4]);
+  assert.deepEqual(fit.casePages(docker.projects), [fit.CASE_PAGES[4]]);
 
   const ci = fit.answerQuestion("Does he have CI/CD experience?");
   assert.ok(ci.lines[0].includes("Nothing is deployed from them"));

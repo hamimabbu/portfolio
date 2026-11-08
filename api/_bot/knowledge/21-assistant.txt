@@ -6,4 +6,3 @@ follow: What does the assistant do with my questions? | What are Hamim's stronge
 This is a small assistant that answers from the facts on this site, and says so when something is not there.
 Ask about his projects, tools, studies, work history, availability or contact. The line under each answer says whether it was written straight from the facts or worded by an AI model and checked against them.
 Skill questions like does he know Wireshark are answered from a written skills list, with no AI.
-The assistant is also one of his projects, listed on the home page as Case 02, and it has its own public repository.

@@ -2,7 +2,7 @@ title: Contact
 keywords: contact, email, mail, phone, reach, message, linkedin, cv, resume, hire, hiring, get in touch, talk, call, interview, connect, available for an interview, available for interview, an interview, schedule an interview, arrange an interview, set up an interview, book an interview, speak to him, speak with him, talk to him, his number, what is his number, whats his number, mobile number, gmail, outlook, e mail, email address
 asks: How can I contact him? | How do I get in touch with him?
 follow: What roles is he looking for? | Is he available to start after graduating in December 2026? | What about work rights and clearance?
-links: Contact section | #contact ; CV | cv.html ; LinkedIn | https://www.linkedin.com/in/hasibur-rahaman-hamim ; GitHub | https://github.com/hamimabbu
+links: LinkedIn | https://www.linkedin.com/in/hasibur-rahaman-hamim ; GitHub | https://github.com/hamimabbu
 ---
-The quickest way to reach Hamim is LinkedIn: linkedin.com/in/hasibur-rahaman-hamim. The contact section at the bottom of this page also has a message form whenever it is switched on, which mails him and keeps his address private. His code is on GitHub: github.com/hamimabbu
-His CV is on the CV page, as a web page and as a PDF. It has no email address or phone number, so ask for those on LinkedIn or through the message form when it is showing.
+The quickest way to reach Hamim is LinkedIn: linkedin.com/in/hasibur-rahaman-hamim. His code is on GitHub: github.com/hamimabbu
+This site does not list an email, phone number or CV download, so ask for those on LinkedIn.

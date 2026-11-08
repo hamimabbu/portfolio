@@ -2,9 +2,7 @@
 //   checkInput  looks at the visitor's question before anything else happens
 //   checkOutput looks at an AI answer before the visitor sees it
 // These are speed bumps, not a wall. The real safety comes from the design: the assistant holds no
-// secrets, has no tools, and can only repeat public facts.
-
-const persona = require("./persona");
+// secrets, has no tools, and can only repeat public facts about Hamim.
 
 // Letters from other alphabets that look like English letters (written as codes so the file stays plain ASCII)
 const lookalikes = {
@@ -41,21 +39,6 @@ function normalise(input) {
 
 // ---------- things that look like an attack ----------
 
-// Words that point at the assistant's own settings are refused. A project that is about the assistant itself
-// can switch some of them off with allowedTerms in persona.js, so its visitors can ask about keys or files.
-const internalTerms = {
-  canary: "canary",
-  knowledge: "knowledge (?:base|files?|folder)",
-  context: "context window",
-  message: "system message",
-  apikey: "api[ _-]?key",
-  secretkey: "secret key",
-};
-const allowedTerms = persona.allowedTerms || [];
-const internalsPattern = Object.keys(internalTerms)
-  .filter((name) => !allowedTerms.includes(name))
-  .map((name) => internalTerms[name]);
-
 const patterns = [
   ["override", /\b(ignore|ignoring|disregard|forget|override|bypass|overrule)\b.{0,40}\b(instructions?|rules?|prompts?|guidelines?|guardrails?|restrictions?|polic(y|ies)|above|previous|prior|earlier|system|everything|all|instrucciones|instrucoes|anteriores|anweisungen|istruzioni|precedenti|vorherigen)\b/],
   ["override", /\b(ignora|ignorez|ignoriere|ignorar|ignorare|oublie|oubliez|vergiss|olvida|esquece)\b.{0,30}\b(instrucciones|instrucoes|instructions|anweisungen|istruzioni|regles|reglas|regeln|regras|anteriores|precedentes|vorherigen|precedenti|todo|tout|alles|tutto)\b/],
@@ -66,8 +49,8 @@ const patterns = [
   ["role-play", /\b(you are now|from now on|act as|acting as|pretend (to be|you|that)|role ?play|simulate (being|a)|imagine you (are|were)|behave (as|like)|new persona|you must now|your new (role|task|instructions?))\b/],
   ["jailbreak", /\b(developer mode|dan mode|do anything now|jail ?break(ing|er)?|god mode|sudo mode|unrestricted|no restrictions|without (any )?(restrictions|filters|rules|limits)|uncensored|unfiltered|admin mode|debug mode|maintenance mode)\b/],
   ["encoding", /\b(base ?64|rot ?13|hex(adecimal)? (encoded|string)|decode (this|the following)|encoded (message|string)|binary (code|string)|morse)\b/],
+  ["internals", /\b(canary|knowledge (base|files?|folder)|context window|system message|api[ _-]?key|secret key)\b/],
 ];
-if (internalsPattern.length) patterns.push(["internals", new RegExp("\\b(" + internalsPattern.join("|") + ")\\b")]);
 
 // the same ideas with the spaces squeezed out, to catch "i g n o r e  p r e v i o u s"
 const squashedPhrases = [
@@ -128,13 +111,11 @@ function checkInput(raw, max = 200) {
 // ---------- checking an AI answer ----------
 
 // words that can start a sentence or sit in the middle of one without being a name
-const commonWords = new Set(["I", "He", "She", "They", "His", "Her", "Its", "The", "It", "This", "That", "There", "Yes", "No", "Please", "AI"]);
+const commonWords = new Set(["I", "He", "His", "Hamim", "Hamim's", "The", "It", "This", "That", "There", "Yes", "No", "Please", "AI", "LinkedIn"]);
 
 function checkOutput(answer, options) {
   const reject = (reason) => ({ ok: false, reason });
   const context = String(options.context || "").toLowerCase();
-  // names that belong to this site (the person, a social network) and may appear without being in the facts
-  const knownNames = new Set((options.knownWords || persona.knownWords).map((word) => word.toLowerCase()));
 
   if (typeof answer !== "string") return reject("type");
 
@@ -175,19 +156,11 @@ function checkOutput(answer, options) {
       // a list marker such as "-" keeps the next word at the start of a sentence
       if (/^[-\u2022\u2013]+$/.test(token)) continue;
       const word = token.replace(/^[("']+|[)"'.,;:!?]+$/g, "").replace(/'s$/, "");
-      if (word && !sentenceStart && /^[A-Z]/.test(word) && !commonWords.has(word) && !knownNames.has(word.toLowerCase())) {
+      if (word && !sentenceStart && /^[A-Z]/.test(word) && !commonWords.has(word)) {
         if (!context.includes(word.toLowerCase())) return reject("name");
       }
       sentenceStart = /[.!?:]$/.test(token);
     }
-  }
-
-  // 5. a very short reply (three words or fewer) must be made of words from the facts, so a lone "PWNED"
-  // from a model that obeyed the visitor is not shown. This is a narrow guard, not a check that an answer is true.
-  if (text.split(/\s+/).length <= 3) {
-    const longWords = lower.match(/[a-z]{4,}/g) || [];
-    const found = longWords.filter((word) => context.includes(word)).length;
-    if (longWords.length > 0 && found / longWords.length < 0.5) return reject("ungrounded");
   }
 
   return { ok: true, lines: lines.slice(0, 5) };

@@ -3,5 +3,6 @@ keywords: learning, learn, next, plan, planning, planned, future, improve, growi
 asks: What is he still learning? | What is next for him?
 follow: What did he do in the Active Directory lab? | What is he studying? | What are Hamim's strongest security projects?
 ---
+Studying for the PNPT, the practical penetration testing certification from TCM Security.
 Next in his Active Directory lab: LLMNR poisoning, SMB relay and Kerberoasting, then a write-up of what each one leaves in the logs.
 ExpiryTracker, his own app idea, is still at the design stage.

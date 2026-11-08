@@ -25,8 +25,6 @@ const types = {
   ".js": "text/javascript; charset=utf-8",
   ".svg": "image/svg+xml",
   ".png": "image/png",
-  ".woff2": "font/woff2",
-  ".pdf": "application/pdf",
   ".json": "application/json",
   ".txt": "text/plain; charset=utf-8",
 };
@@ -37,8 +35,6 @@ function createServer(options = {}) {
 
   const { createHandler } = require(path.join(ROOT, "api", "_bot", "app"));
   const chat = createHandler({ env, fetch: options.fetch, log: options.log });
-  const { createContactHandler } = require(path.join(ROOT, "api", "_bot", "contact"));
-  const contact = createContactHandler({ env, fetch: options.fetch, log: options.log });
 
   const config = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
   const headers = {};
@@ -52,9 +48,9 @@ function createServer(options = {}) {
       url = "/__bad__";
     }
 
-    if (url === "/api/chat" || url === "/api/contact") {
+    if (url === "/api/chat") {
       Object.keys(headers).forEach((name) => res.setHeader(name, headers[name]));
-      return (url === "/api/chat" ? chat : contact)(req, res);
+      return chat(req, res);
     }
 
     if (url === "/") url = "/index.html";

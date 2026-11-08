@@ -292,17 +292,17 @@ const ROUTED = "could you possibly illustrate something he constructed";
 test("when the keywords find nothing, a model can pick the topic and the answer is still checked", async () => {
   const replies = [
     () => groqReply("projects"),
-    () => groqReply("The site lists nine projects. Four of them are security projects."),
+    () => groqReply("The site lists eight projects. Four of them are security projects."),
   ];
   await withGroq((request, n) => replies[n - 1](), async ({ handler, logs }, service) => {
     const r = await ask(handler, ROUTED);
     assert.equal(r.body.mode, "ai");
-    assert.deepEqual(r.body.lines, ["The site lists nine projects. Four of them are security projects."]);
+    assert.deepEqual(r.body.lines, ["The site lists eight projects. Four of them are security projects."]);
     assert.match(r.body.trace.match, /^topics chosen by an AI model \(groq\): All his projects/);
     assert.equal(service.seen.length, 2);
     // the second call gets the facts of the chosen topic only
     assert.match(service.seen[1].body.messages[0].content, /CONTEXT:/);
-    assert.match(service.seen[1].body.messages[0].content, /lists nine projects/);
+    assert.match(service.seen[1].body.messages[0].content, /lists eight projects/);
     assert.ok(logs.some((l) => l.ev === "routed" && l.found === 1));
     assert.ok(!JSON.stringify(logs).includes("illustrate"), "the question is never logged");
   });
@@ -313,7 +313,7 @@ test("if the wording call fails after routing, the visitor gets the plain facts 
     const r = await ask(handler, ROUTED);
     assert.equal(r.body.mode, "local");
     assert.equal(r.body.sources[0], "All his projects");
-    assert.match(r.body.lines[0], /lists nine projects/);
+    assert.match(r.body.lines[0], /lists eight projects/);
     assert.match(r.body.trace.check, /AI not used/);
   });
 });
@@ -340,7 +340,7 @@ test("the router can only return real topic ids, anything else is thrown away", 
 });
 
 test("a model can pick two topics, and ids are matched even with punctuation or capitals", async () => {
-  await withGroq((request, n) => (n === 1 ? groqReply("Code, projects.") : groqReply("Hamim has a GitHub profile and nine projects.")), async ({ handler }, service) => {
+  await withGroq((request, n) => (n === 1 ? groqReply("Code, projects.") : groqReply("Hamim has a GitHub profile and eight projects.")), async ({ handler }, service) => {
     const r = await ask(handler, ROUTED);
     assert.equal(r.body.mode, "ai");
     assert.equal(r.body.sources.length, 2);

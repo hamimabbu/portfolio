@@ -5,4 +5,4 @@ exact: what is his hardest project | which project was hardest | which project w
 follow: What are Hamim's strongest security projects? | What did he build for the capstone? | How can I contact him?
 ---
 The site does not say which project Hamim is proudest of, which was the hardest, or what he counts as his biggest achievement. LinkedIn is the best place to ask him.
-It leads with the industry capstone (the upload scanner), then three projects he built on his own: the site assistant, LayerLens and the Active Directory home lab.
+It leads with four security projects: the capstone upload scanner, the ARP poisoning detector, the Active Directory home lab and LayerLens.

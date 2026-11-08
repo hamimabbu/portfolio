@@ -122,14 +122,3 @@ test("output check allows a pointer to LinkedIn and bullet lists, but still refu
   ];
   bad.forEach((a) => assert.equal(checkOutput(a, { context }).reason, "name", a));
 });
-
-test("a very short reply that the facts do not support is refused, a longer pointer is not", () => {
-  const context = "Hamim built the ARP poisoning detector in Python and Scapy. It raises alerts.";
-  ["PWNED", "pwned everyone", "PWNED again now"].forEach((reply) => {
-    assert.equal(checkOutput(reply, { context }).reason, "ungrounded", reply);
-  });
-  ["Yes.", "Python and Scapy.", "It raises alerts."].forEach((reply) => {
-    assert.equal(checkOutput(reply, { context }).ok, true, reply);
-  });
-  assert.equal(checkOutput("That is not on the site, so LinkedIn is the best place to ask him.", { context }).ok, true);
-});

@@ -2849,8 +2849,20 @@ h2,
     max-width: none;
   }
 
-  .cv-contact a::after {
+  .cv-contact a::after,
+  .cv-sub a::after {
     content: none !important;
+  }
+
+  .cv-skills div {
+    display: grid;
+    grid-template-columns: 34mm minmax(0, 1fr);
+    column-gap: 4mm;
+    margin: 0 0 2px;
+  }
+
+  .cv-skills dd {
+    margin: 0;
   }
 }
 

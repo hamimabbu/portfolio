@@ -67,7 +67,7 @@
 
   // only the sites this page already links to are allowed as link targets
   function safeHref(url) {
-    const outside = /^https:\/\/(github\.com|www\.linkedin\.com|coursera\.org)\//;
+    const outside = /^https:\/\/(github\.com|www\.linkedin\.com|coursera\.org|www\.credly\.com)\//;
     const sameSite = /^([a-z0-9-]+\.html|#[a-z-]+)$/;
     return outside.test(url) || sameSite.test(url) ? url : null;
   }

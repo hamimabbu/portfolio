@@ -385,7 +385,7 @@
       id: "network-gear", name: "Network equipment", status: "no", group: true,
       aliases: ["firewall", "firewalls", "vpn", "cisco", "routing", "switching", "router", "routers", "switch"],
       weak: ["switch", "switching"],
-      near: "Network work on the site is ARP traffic analysis and the lab network.",
+      near: "Network work on the site is ARP traffic analysis and the lab network. The Cisco Networking Academy course is an introduction to cybersecurity, not network equipment.",
       projects: [4, 5], seen: ["ARP"],
     },
     {
@@ -518,14 +518,20 @@
     {
       id: "certs", name: "Other certificates", status: "no", group: true,
       aliases: ["security+", "security plus", "comptia security+", "comptia security", "network+", "a+", "comptia a+", "cysa+", "cysa", "ceh", "oscp", "osep", "ejpt", "cissp", "cism", "ccna", "az 900", "sc 200", "sc 900", "btl1", "gsec", "giac"],
-      near: "The only certificate on the site is Google Technical Support Fundamentals (done).",
-      projects: [], seen: ["Google Technical Support Fundamentals"],
+      near: "The certificates on the site are Google Technical Support Fundamentals and the Cisco Networking Academy Introduction to Cybersecurity course (both done). Neither is an exam such as CCNA.",
+      projects: [], seen: ["Google Technical Support Fundamentals", "Introduction to Cybersecurity"],
     },
     {
       id: "google-tsf", name: "Google Technical Support Fundamentals", status: "yes",
       aliases: ["google technical support fundamentals", "technical support fundamentals", "coursera"],
       proof: "Coursera certificate, Oct 2026. It can be verified on Coursera.",
       projects: [], seen: ["Google Technical Support Fundamentals", "Verify on Coursera"],
+    },
+    {
+      id: "cisco-intro-cyber", name: "Cisco Introduction to Cybersecurity course", status: "yes",
+      aliases: ["cisco certificate", "cisco certification", "cisco cert", "cisco course", "cisco networking academy", "cisco academy", "netacad", "introduction to cybersecurity", "intro to cybersecurity", "cisco introduction to cybersecurity", "cisco intro to cybersecurity"],
+      proof: "Cisco Networking Academy course, Nov 2026, at student level. It can be verified on Credly.",
+      projects: [], seen: ["Introduction to Cybersecurity", "Verify on Credly"],
     },
     {
       id: "google-it", name: "Google IT Support certificate", status: "part",
